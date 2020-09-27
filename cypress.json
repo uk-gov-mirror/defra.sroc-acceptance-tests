@@ -1,0 +1,11 @@
+{
+  "env": {
+    "TAGS": "not @ignore"
+  },
+  "testFiles": "**/*.feature",
+  "video": false,
+  "baseUrl": "http://localhost:3000",
+  "users": {
+    "system": "system@example.com"
+  }
+}
