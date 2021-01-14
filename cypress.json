@@ -6,6 +6,37 @@
   "video": false,
   "baseUrl": "http://localhost:3000",
   "users": {
-    "system": "system@example.com"
+    "system": {
+      "email": "system@example.com",
+      "regimes": ["PAS"]
+    },
+    "installations": {
+      "email": "installations@sroc.gov.uk",
+      "regimes": ["PAS"]
+    },
+    "waste": {
+      "email": "waste@sroc.gov.uk",
+      "regimes": ["WML"]
+    },
+    "water": {
+      "email": "water@sroc.gov.uk",
+      "regimes": ["CFD"]
+    },
+    "admin": {
+      "email": "admin@sroc.gov.uk",
+      "regimes": ["CFD", "PAS", "WML"]
+    },
+    "billing": {
+      "email": "billing@sroc.gov.uk",
+      "regimes": ["CFD", "PAS", "WML"]
+    },
+    "export": {
+      "email": "export@sroc.gov.uk",
+      "regimes": ["CFD", "PAS", "WML"]
+    },
+    "readonly": {
+      "email": "readonly@sroc.gov.uk",
+      "regimes": ["CFD", "PAS", "WML"]
+    }
   }
 }

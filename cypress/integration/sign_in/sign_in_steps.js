@@ -6,7 +6,7 @@ Given('I visit the sign in page', () => {
 })
 
 When('I enter my credentials', () => {
-  SignInPage.email().type(Cypress.config().users.system)
+  SignInPage.email().type(Cypress.config().users.system.email)
   SignInPage.password().type(Cypress.env('PASSWORD'))
 
   SignInPage.logIn().click()

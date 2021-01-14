@@ -24,6 +24,26 @@ class TransactionsPage {
   static customerColumn () {
     return cy.get('.table > tbody > tr > td:nth-child(4)')
   }
+
+  static transactionMenu () {
+    return cy.get('#navbarTransactionsSelectorLink')
+  }
+
+  static adminMenu () {
+    return cy.get('#navbarAdminSelectorLink')
+  }
+
+  static billingMenu () {
+    return cy.get('#navbarAnnualBillingSelectorLink')
+  }
+
+  static regimeMenu () {
+    return cy.get('#navbarRegimeSelectorLink')
+  }
+
+  static downloadTransactionDataMenuItem () {
+    return cy.get(':nth-child(1) > .nav-item > .dropdown-menu > [href="/regimes/pas/data_export"]')
+  }
 }
 
 export default TransactionsPage
