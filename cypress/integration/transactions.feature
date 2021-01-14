@@ -1,8 +1,9 @@
 Feature: Transactions
 
   Background:
-    Given I sign in as the 'system' user
+    Given I sign in as the 'admin' user
 
   Scenario: Search for customer
-    When I search for the customer 'A1234B'
-    Then I see only results for customer 'A1234B'
+    When I select the 'Water Quality' regime
+     And I search for the customer 'A60425822C'
+    Then I see only results for customer 'A60425822C'

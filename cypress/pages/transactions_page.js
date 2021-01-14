@@ -41,6 +41,24 @@ class TransactionsPage {
     return cy.get('#navbarRegimeSelectorLink')
   }
 
+  static regimeMenuItem (regime) {
+    let slug
+
+    switch (regime) {
+      case 'Water Quality':
+        slug = 'cfd'
+        break
+      case 'Installations':
+        slug = 'pas'
+        break
+      case 'Waste':
+        slug = 'wml'
+        break
+    }
+
+    return cy.get(`.nav-item.show > .dropdown-menu > [href="/regimes/${slug}/transactions"]`)
+  }
+
   static downloadTransactionDataMenuItem () {
     return cy.get(':nth-child(1) > .nav-item > .dropdown-menu > [href="/regimes/pas/data_export"]')
   }
