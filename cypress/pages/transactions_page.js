@@ -62,6 +62,14 @@ class TransactionsPage {
   static downloadTransactionDataMenuItem () {
     return cy.get(':nth-child(1) > .nav-item > .dropdown-menu > [href="/regimes/pas/data_export"]')
   }
+
+  static annualBillingDataMenuItem () {
+    return cy.get('#navbarAnnualBillingSelectorLink')
+  }
+
+  static reviewAnnualBillingDataMenuItem () {
+    return cy.get(':nth-child(1) > .dropdown > div > [href="/regimes/wml/annual_billing_data_files"]')
+  }
 }
 
 export default TransactionsPage

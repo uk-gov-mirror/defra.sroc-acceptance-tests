@@ -30,17 +30,21 @@
   "dependencies": {
     "cypress": "^5.2.0",
     "cypress-cucumber-preprocessor": "^2.5.5",
-    "cypress-dotenv": "^1.2.2",
-    "dotenv": "^8.2.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "cypress-dotenv": "^1.2.2",
+    "dotenv": "^8.6.0",
     "standard": "^14.3.4"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true
   },
   "standard": {
-    "globals": ["cy", "Cypress", "expect"]
+    "globals": [
+      "cy",
+      "Cypress",
+      "expect"
+    ]
   }
 }
