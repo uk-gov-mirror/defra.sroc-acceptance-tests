@@ -1,7 +1,7 @@
 Feature: Review Annual Billing
 
   Background:
-   Given I sign in as the 'system' user
+   Given I sign in as the 'admin' user
     When I select the 'Waste' regime
      And I proceed to review Annual Billing details
 

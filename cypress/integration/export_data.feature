@@ -1,7 +1,7 @@
 Feature: Exporting Transaction Data
 
   Background:
-    Given I sign in as the 'system' user
+    Given I sign in as the 'admin' user
 
   Scenario: Download transaction data
     When I select the 'Installations' regime
