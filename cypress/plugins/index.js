@@ -25,21 +25,30 @@ const dotenvPlugin = require('cypress-dotenv')
 // local config file
 const path = require('path')
 
-// Based mainly on
-// https://docs.cypress.io/api/plugins/configuration-api.html#Switch-between-multiple-configuration-files
-//
-// We have altered it slightly to allow us the ability to treat
-//
-// - cypress.json as config shared across all environments
-// - config/[environment].json for config specific to the current environment
-//
-// We then merge the to. The example does not allow for this.
-function loadAndMergeConfig (config) {
-  const environment = config.env.configFile || 'local'
-  const pathToConfigFile = path.resolve('config', `${environment}.json`)
-  const fileConfig = require(pathToConfigFile)
+/**
+ * Load the cypress-dotenv plugin and read env vars for a specific environment
+ *
+ * Each environment (DEV, TEST, PRE-PROD etc) has config specific to it which we also need to keep secret and not commit
+ * to the repo. Reading these values from environment variables is the '12-factor app' way to do this but we also want
+ * to be able to quickly switch between them.
+ *
+ * The dotenv package supports this by automatically loading env vars from a file when an app loads rather than having
+ * to set them before hand in our profile or bash session.
+ *
+ * The cypress-dotenv package takes this one step further by allowing you to override expected config such as `baseUrl`
+ * with an env var. It also will make anything declared as `CYPRESS_MY_VAR` available in the tests using
+ * `Cypress.env('MY_VAR')`.
+ *
+ * Using https://docs.cypress.io/api/plugins/configuration-api.html#Switch-between-multiple-configuration-files as an
+ * inspiration we have added the ability to set an environment when cypress is called and have the project read its
+ * config from a matching `environments/.env` file
+*/
+function loadDotenvPlugin (config) {
+  const environment = config.env.environment || 'local'
 
-  return Object.assign({}, config, fileConfig)
+  const pathToEnvFile = path.resolve('environments', `.${environment}.env`)
+
+  return dotenvPlugin(config, { path: pathToEnvFile }, true)
 }
 
 /**
@@ -51,9 +60,7 @@ module.exports = (on, config) => {
 
   on('file:preprocessor', cucumber())
 
-  config = dotenvPlugin(config)
-
-  config = loadAndMergeConfig(config)
+  config = loadDotenvPlugin(config)
 
   return config
 }

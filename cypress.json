@@ -4,7 +4,6 @@
   },
   "testFiles": "**/*.feature",
   "video": false,
-  "baseUrl": "http://localhost:3000",
   "users": {
     "system": {
       "email": "system@example.com",

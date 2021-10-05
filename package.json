@@ -4,18 +4,20 @@
   "description": "Automated acceptance tests for the SROC Tactical Charging Module",
   "main": "index.js",
   "scripts": {
-    "cy:open": "cypress open",
-    "cy:open:local": "cypress open --env configFile=local",
-    "cy:open:dev": "cypress open --env configFile=dev",
-    "cy:open:tst": "cypress open --env configFile=tst",
-    "cy:open:pre": "cypress open --env configFile=pre",
-    "cy:run": "cypress run",
-    "cy:run:local": "cypress run --env configFile=local",
-    "cy:run:dev": "cypress run --env configFile=dev",
-    "cy:run:tst": "cypress run --env configFile=tst",
-    "cy:run:pre": "cypress run --env configFile=pre",
+    "cy:open": "rm -f cypress/reports/json/*.json && cypress open",
+    "cy:open:local": "rm -f cypress/reports/json/*.json && cypress open --env environment=local",
+    "cy:open:dev": "rm -f cypress/reports/json/*.json && cypress open --env environment=dev",
+    "cy:open:tst": "rm -f cypress/reports/json/*.json && cypress open --env environment=tst",
+    "cy:open:pre": "rm -f cypress/reports/json/*.json && cypress open --env environment=pre",
+    "cy:run": "rm -f cypress/reports/json/*.json && cypress run",
+    "cy:run:local": "rm -f cypress/reports/json/*.json && cypress run --env environment=local",
+    "cy:run:dev": "rm -f cypress/reports/json/*.json && cypress run --env environment=dev",
+    "cy:run:tst": "rm -f cypress/reports/json/*.json && cypress run --env environment=tst",
+    "cy:run:pre": "rm -f cypress/reports/json/*.json && cypress run --env environment=pre",
+    "cy:run:ci": "rm -f cypress/reports/json/*.json && cypress-tags run --env environment=ci TAGS='@ci'",
     "lint": "standard",
-    "test": "cypress run"
+    "test": "rm cypress/reports/json/*.json && cypress run",
+    "report": "node cypress/reports/report_generator.js"
   },
   "repository": {
     "type": "git",
@@ -28,17 +30,24 @@
   },
   "homepage": "https://github.com/DEFRA/sroc-acceptance-tests#readme",
   "dependencies": {
-    "cypress": "^5.2.0",
-    "cypress-cucumber-preprocessor": "^2.5.5",
+    "cucumber-html-reporter": "^5.5.0",
+    "cypress": "^8.3.1",
+    "cypress-cucumber-preprocessor": "^4.2.0",
+    "cypress-dotenv": "^1.2.2",
+    "dotenv": "^8.2.0",
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "cypress-dotenv": "^1.2.2",
-    "dotenv": "^8.6.0",
-    "standard": "^14.3.4"
+    "standard": "^16.0.3"
   },
   "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
+    "nonGlobalStepDefinitions": true,
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/reports/json",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
   },
   "standard": {
     "globals": [

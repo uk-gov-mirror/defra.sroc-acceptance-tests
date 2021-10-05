@@ -30,19 +30,21 @@ npm install
 
 ## Configuration
 
-> Important! Do not store credentials such as passwords in the config files
+> Important! Do not add environment files to source control
 
-We have 5 environments where the TCM could be running; local, development, test, pre-production, and production.
+We have 5 environments where the CHA could be running; local, development, test, pre-production, and production.
 
-Each has its own config file stored in `config/`. Any configuration shared across the environments is stored in `cypress.json`. But these can be overidden in the environment config file.
+Each has its own config file stored in `environments/`. Any configuration shared across the environments is stored in `cypress.json`. But this can be overidden in the environment config files.
 
-### Dotenv
+### Environment files
 
-Via the [Cypress dotenv](https://github.com/morficus/cypress-dotenv) plugin you can store environment variables in a local `.env` file.
+The config or 'environment' files hold environment variables which are key-value pairs; _name of the thing_ and the _value of the thing_. For example, `CYPRESS_PASSWORD=password12345`.
 
-Things like credentials, which we don't want stored in the project, we'll pass in as environment variables. Dotenv and the `.env` file saves you having to add them to your session.
+Depending on the environment selected the [Cypress dotenv](https://github.com/morficus/cypress-dotenv) plugin will read in the values and make them available via [Cypress.env()](https://docs.cypress.io/api/cypress-api/env) in the tests.
 
-Checkout `.env.example` for an example of the file you'll need to create to run the project.
+Using these `.env` files allows us to store both config and credentials that change across environments in one place but it is important they are *_never_* committed to source control.
+
+Checkout [environments/.env.example](/environments/.env.example) for an example of the file you'll need to create for each environment.
 
 ## Execution
 
@@ -93,6 +95,16 @@ Any steps which can be shared across features can be placed in `cypress/integrat
 Another preference of the team is to use the [Page object pattern](https://martinfowler.com/bliki/PageObject.html). Essentially, we store the code to interact with a page of our service in one place. Tests interact with our page object not the page directly. So should something change, we only have to change it in one place.
 
 Pages live in `cypress/pages`.
+
+## Reporting
+
+Built into the project is the ability to generate a HTML report of your last test run.
+
+<img src="docs/report.png" width="400" alt="Screenshot of html report" />
+
+Each time you use `cy:open` or `cy:run` the project will automatically delete the previous test results and generate new ones based on what tests are run.
+
+If you then call `npm run report` the project will generate a HTML report based on the test results. You can access the report at `cypress/reports/html/report.html`.
 
 ## Contributing to this project
 
