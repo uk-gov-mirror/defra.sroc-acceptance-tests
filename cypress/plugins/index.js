@@ -15,6 +15,8 @@
 // Our custom config handler
 // import EnvironmentConfig from '../../config/index'
 
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
+
 // Added to support use of Cucumber features
 const cucumber = require('cypress-cucumber-preprocessor').default
 
@@ -59,6 +61,29 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
 
   on('file:preprocessor', cucumber())
+
+  on('task', {
+    s3Upload ({ Body, Bucket, remotePath, filename }) {
+      const Key = path.join(remotePath, filename)
+      const client = new S3Client()
+      const command = new PutObjectCommand({ Bucket, Key, Body })
+
+      return new Promise((resolve, reject) => {
+        client
+          .send(command)
+          .then(
+            // If client.send() was successful then resolve the promise so Cypress can continue, returning the remote
+            // file path so we can log it.
+            data => {
+              resolve(path.join(Bucket, Key))
+            },
+            // If client.send() failed then reject the promise so Cypress can throw an error
+            error => {
+              reject(error)
+            })
+      })
+    }
+  })
 
   config = loadDotenvPlugin(config)
 
