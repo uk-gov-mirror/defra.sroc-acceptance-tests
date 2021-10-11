@@ -64,7 +64,9 @@ module.exports = (on, config) => {
 
   on('task', {
     s3Upload ({ Body, Bucket, remotePath, filename }) {
-      const Key = path.join(remotePath, filename)
+      // We use a template literal to combine the path and filename rather than path.join() to ensure it joins them
+      // with a forward slash as required by S3 (which wouldn't happen if running under Windows).
+      const Key = `${remotePath}/${filename}`
       const client = new S3Client()
       const command = new PutObjectCommand({ Bucket, Key, Body })
 
@@ -75,7 +77,7 @@ module.exports = (on, config) => {
             // If client.send() was successful then resolve the promise so Cypress can continue, returning the remote
             // file path so we can log it.
             data => {
-              resolve(path.join(Bucket, Key))
+              resolve(`${Bucket}/${Key}`)
             },
             // If client.send() failed then reject the promise so Cypress can throw an error
             error => {
