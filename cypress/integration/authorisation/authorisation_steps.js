@@ -10,7 +10,7 @@ Then('I should see the admin menu', () => {
 })
 
 But('I should not see the admin menu', () => {
-  TransactionsPage.adminMenu().should('not.be.visible')
+  TransactionsPage.adminMenu().should('not.exist')
 })
 
 Then('I should see the billing menu', () => {
@@ -18,7 +18,7 @@ Then('I should see the billing menu', () => {
 })
 
 But('I should not see the billing menu', () => {
-  TransactionsPage.billingMenu().should('not.be.visible')
+  TransactionsPage.billingMenu().should('not.exist')
 })
 
 Then('I should see the transactions menu', () => {
@@ -30,7 +30,7 @@ And('I should see download transactions', () => {
 })
 
 But('I should not see download transactions', () => {
-  TransactionsPage.downloadTransactionDataMenuItem().should('not.be.visible')
+  TransactionsPage.downloadTransactionDataMenuItem().should('not.exist')
 })
 
 Then('I should only see the {string} regime', (regime) => {
