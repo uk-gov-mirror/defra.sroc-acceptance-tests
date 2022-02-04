@@ -70,6 +70,10 @@ class TransactionsPage {
   static reviewAnnualBillingDataMenuItem () {
     return cy.get(':nth-child(1) > .dropdown > div > [href="/regimes/wml/annual_billing_data_files"]')
   }
+
+  static regionDropDown () {
+    return cy.get('#region')
+  }
 }
 
 export default TransactionsPage
