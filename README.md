@@ -62,6 +62,18 @@ To open the test runner use `npm run cy:open:[env]` replacing `[env]` with your 
 npm run cy:open:local
 ```
 
+#### WIP
+
+The project supports only running scenarios tagged as `@wip`. This can be very useful when working on new scenarios or trying to debug failing ones. Reducing the number being run reduces the noise and test output allowing you to focus.
+
+Behind the scenes it behaves the same as using the [Test runner](#test-runner) only you use a different command to start Cypress.
+
+```bash
+npm run cy:wip:local
+```
+
+The test runner will open as normal but when you run a feature only those scenarios tagged with `@wip` will run.
+
 ### CLI
 
 > Runs Cypress tests to completion. By default, cypress run will run all tests headlessly in the Electron browser.
