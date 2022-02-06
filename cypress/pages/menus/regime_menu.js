@@ -2,7 +2,7 @@ class RegimeMenu {
   static get options () {
     return {
       Installations: '[href="/regimes/pas/transactions"]',
-      Waste: '[href="/regimes/pas/transactions"]',
+      Waste: '[href="/regimes/wml/transactions"]',
       'Water Quality': '[href="/regimes/cfd/transactions"]'
     }
   }
