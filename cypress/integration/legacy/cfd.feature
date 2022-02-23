@@ -60,6 +60,7 @@ Feature: CFD (Water Quality) Legacy
     And approve the transactions for billing
     And generate the transaction file
     Then I see confirmation the transaction file is queued for export
+    And I log the transaction filename to prove it can be used in another step
     And there are no transactions to be billed displayed anymore
     And I select 'Transaction File History' from the Transactions menu
     And the main heading is 'Transaction File History'

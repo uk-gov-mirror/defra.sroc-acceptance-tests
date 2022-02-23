@@ -302,7 +302,26 @@ And('generate the transaction file', () => {
 })
 
 Then('I see confirmation the transaction file is queued for export', () => {
-  cy.get('div.alert-success.alert-dismissable').should('contain.text', 'Successfully queued')
+  cy.get('div.alert-success.alert-dismissable')
+    .should('contain.text', 'Successfully queued')
+    .then(alert => {
+      cy.wrap(getExportFilename(alert)).as('exportFilename')
+    })
+})
+
+function getExportFilename (element) {
+  return element
+    // Get the element text
+    .text()
+    // Use regex match to extract the text between "transaction file " and " for export"
+    // ?<= and ?= stop the matcher from returning those strings, so we just get the filename
+    // This results in an array with a single item, so we return that using [0]
+    .match(/(?<=transaction file )(.*)(?= for export)/g)[0]
+}
+
+And('I log the transaction filename to prove it can be used in another step', () => {
+  cy.get('@exportFilename')
+    .then(filename => cy.log(filename))
 })
 
 And('I set region to {word}', (option) => {

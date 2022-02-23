@@ -6,7 +6,7 @@ Given('I import the file {string}', (filename) => {
       cy.task('s3Upload', {
         Body,
         Bucket: Cypress.env('S3_BUCKET'),
-        remotePath: Cypress.env('S3_PATH'),
+        remotePath: Cypress.env('S3_UPLOAD_PATH'),
         filename
       })
     })

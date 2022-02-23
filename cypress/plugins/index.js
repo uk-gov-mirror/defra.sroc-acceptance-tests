@@ -15,7 +15,7 @@
 // Our custom config handler
 // import EnvironmentConfig from '../../config/index'
 
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3')
+const { S3Client, GetObjectCommand, PutObjectCommand } = require('@aws-sdk/client-s3')
 
 // Added to support use of Cucumber features
 const cucumber = require('cypress-cucumber-preprocessor').default
@@ -54,6 +54,21 @@ function loadDotenvPlugin (config) {
 }
 
 /**
+ * We use GetObjectCommand to read data from an S3 bucket. This returns a readable stream of data, which we need to
+ * read in chunks then convert to a string for it to be usable.
+ * https://github.com/aws/aws-sdk-js-v3/issues/1877
+ * https://stackoverflow.com/questions/10623798/how-do-i-read-the-contents-of-a-node-js-stream-into-a-string-variable
+ */
+function streamToString (stream) {
+  const chunks = []
+  return new Promise((resolve, reject) => {
+    stream.on('data', (chunk) => chunks.push(Buffer.from(chunk)))
+    stream.on('error', (err) => reject(err))
+    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
+  })
+}
+
+/**
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
@@ -78,6 +93,32 @@ module.exports = (on, config) => {
             // file path so we can log it.
             data => {
               resolve(`${Bucket}/${Key}`)
+            },
+            // If client.send() failed then reject the promise so Cypress can throw an error
+            error => {
+              reject(error)
+            })
+      })
+    },
+
+    s3Download ({ Bucket, remotePath, filePath }) {
+      // We use a template literal to combine the paths rather than path.join() to ensure it joins them with a forward
+      // slash as required by S3 (which wouldn't happen if running under Windows).
+      const Key = `${remotePath}/${filePath}`
+      const client = new S3Client()
+      const command = new GetObjectCommand({ Bucket, Key })
+
+      return new Promise((resolve, reject) => {
+        client
+          .send(command)
+          .then(
+            // If client.send() was successful then resolve the promise so Cypress can continue.
+            response => {
+              // GetObjectCommand gives us a stream of data, which we convert into a string and then return.
+              streamToString(response.Body)
+                .then(data => {
+                  resolve(data)
+                })
             },
             // If client.send() failed then reject the promise so Cypress can throw an error
             error => {
