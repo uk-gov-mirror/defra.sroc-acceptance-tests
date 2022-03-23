@@ -4,7 +4,7 @@ class AcceptInvitePage {
   }
 
   static mainHeading () {
-    return cy.get('h1')
+    return cy.get('h2')
   }
 
   static password () {

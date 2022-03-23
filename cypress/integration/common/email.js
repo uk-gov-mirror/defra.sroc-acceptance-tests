@@ -109,7 +109,7 @@ And('I have forgotten my password', () => {
 
 When('I follow the link to unlock my account', () => {
   cy.get('@user').then((user) => {
-    LastEmailPage.lastEmail([user.email, 'Your account has been locked'])
+    LastEmailPage.lastEmail([`Hello ${user.firstName} ${user.lastName}`, 'account has been locked'])
 
     cy.get('@lastEmail').then((lastEmail) => {
       const link = LastEmailPage.extractUnlockAccountLink(lastEmail.last_email.body)
