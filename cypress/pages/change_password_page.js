@@ -1,23 +1,19 @@
-class ChangePasswordPage {
+import BasePage from './base_page'
+
+class ChangePasswordPage extends BasePage {
   static confirm () {
     cy.get('h1').should('contain', 'Change your password')
     cy.url().should('include', '/auth/password')
   }
 
-  static mainHeading () {
-    return cy.get('h1')
-  }
+  // Elements
 
-  static password () {
+  static passwordInput () {
     return cy.get('input#user_password')
   }
 
-  static passwordConfirmation () {
+  static passwordConfirmationInput () {
     return cy.get('input#user_password_confirmation')
-  }
-
-  static changeMyPassword () {
-    return cy.get('input[name="commit"]')
   }
 }
 

@@ -43,10 +43,10 @@ Before(() => {
 
 Given('I sign in as the {word} user', (regime) => {
   SignInPage.visit()
-  SignInPage.email().type(Cypress.config().users[regime].email)
-  SignInPage.password().type(Cypress.env('PASSWORD'))
+  SignInPage.emailInput().type(Cypress.config().users[regime].email)
+  SignInPage.passwordInput().type(Cypress.env('PASSWORD'))
 
-  SignInPage.logIn().click()
+  SignInPage.submitButton().click()
 })
 
 Then('the user menu is visible', () => {

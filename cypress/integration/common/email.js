@@ -6,9 +6,9 @@ import AddUserPage from '../../pages/add_user_page'
 import EditUserPage from '../../pages/edit_user_page'
 import ForgotPasswordPage from '../../pages/forgot_password_page'
 import LastEmailPage from '../../pages/last_email_page'
-import MainMenu from '../../pages/menus/main_menu'
 import ResendUnlockPage from '../../pages/resend_unlock_page'
 import SignInPage from '../../pages/sign_in_page'
+import TransactionsPage from '../../pages/transactions_page'
 import UsersPage from '../../pages/users_page'
 
 Given('I am a new user', () => {
@@ -32,21 +32,19 @@ Given('I am an existing user', () => {
 When('a new account is created for me', () => {
   cy.signIn(Cypress.config().users.admin.email)
 
-  MainMenu.admin.getOption('User Management', '').click()
+  TransactionsPage.adminMenu.getOption('User Management', '').click()
 
-  UsersPage.addUserAccount().click()
+  UsersPage.addUserAccountButton().click()
 
   cy.get('@user').then((user) => {
-    AddUserPage.email().type(user.email)
-    AddUserPage.firstName().type(user.firstName)
-    AddUserPage.lastName().type(user.lastName)
+    AddUserPage.emailInput().type(user.email)
+    AddUserPage.firstNameInput().type(user.firstName)
+    AddUserPage.lastNameInput().type(user.lastName)
 
-    AddUserPage.regimeAccess('Waste').click()
-    AddUserPage.addAndInviteUser().click()
-
-    cy.get('.col > .alert')
-      .should('contain.text', 'User account created')
+    AddUserPage.regimeAccessCheckbox('Waste').click()
+    AddUserPage.submitButton().click()
   })
+  cy.alertShouldContain('User account created')
 })
 
 And('I accept the invitation', () => {
@@ -59,11 +57,11 @@ And('I accept the invitation', () => {
       const link = LastEmailPage.extractInvitationLink(lastEmail.last_email.body)
 
       cy.visit(link).then(() => {
-        AcceptInvitePage.mainHeading().should('contain', 'Set a password')
+        AcceptInvitePage.confirm()
 
-        AcceptInvitePage.password().type(Cypress.env('PASSWORD'), { log: false })
-        AcceptInvitePage.passwordConfirmation().type(Cypress.env('PASSWORD'), { log: false })
-        AcceptInvitePage.setPassword().click()
+        AcceptInvitePage.passwordInput().type(Cypress.env('PASSWORD'), { log: false })
+        AcceptInvitePage.passwordConfirmationInput().type(Cypress.env('PASSWORD'), { log: false })
+        AcceptInvitePage.submitButton().click()
       })
     })
   })
@@ -72,19 +70,19 @@ And('I accept the invitation', () => {
 Then('I will be signed in with my new account', () => {
   cy.get('@user').then((user) => {
     const username = `${user.firstName} ${user.lastName}`
-    MainMenu.user.menuLink().should('contain', username)
+    TransactionsPage.userMenu.menuLink().should('contain', username)
   })
 })
 
 And('I incorrectly enter my password 5 times', () => {
   cy.get('@user').then((user) => {
-    SignInPage.email().type(user.email)
+    SignInPage.emailInput().type(user.email)
 
     for (let i = 0; i < 5; i++) {
-      SignInPage.password().clear()
-      SignInPage.password().type(generateStringHelper())
+      SignInPage.passwordInput().clear()
+      SignInPage.passwordInput().type(generateStringHelper())
 
-      SignInPage.logIn().click()
+      SignInPage.submitButton().click()
     }
   })
 })
@@ -93,18 +91,16 @@ And('I have forgotten my password', () => {
   SignInPage.visit()
   SignInPage.forgotPasswordLink().click()
 
-  ForgotPasswordPage.mainHeading().should('contain', 'Forgot your password?')
+  ForgotPasswordPage.confirm()
 
   cy.get('@user').then((user) => {
-    ForgotPasswordPage.email().type(user.email)
-    ForgotPasswordPage.sendMeResetPasswordInstructions().click()
+    ForgotPasswordPage.emailInput().type(user.email)
+    ForgotPasswordPage.submitButton().click()
   })
 
-  cy.get('.col > .alert')
-    .should(
-      'contain.text',
-      'If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.'
-    )
+  cy.alertShouldContain(
+    'If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.'
+  )
 })
 
 When('I follow the link to unlock my account', () => {
@@ -125,17 +121,15 @@ And('request another unlock email', () => {
   ResendUnlockPage.confirm()
 
   cy.get('@user').then((user) => {
-    ResendUnlockPage.email().type(user.email)
-    ResendUnlockPage.resendUnlockInstructions().click()
+    ResendUnlockPage.emailInput().type(user.email)
+    ResendUnlockPage.submitButton().click()
   })
 })
 
 Then('I will see confirmation my account is unlocked', () => {
-  cy.get('.col > .alert')
-    .should(
-      'contain.text',
-      'Your account has been unlocked successfully. Please sign in to continue.'
-    )
+  cy.alertShouldContain(
+    'Your account has been unlocked successfully. Please sign in to continue.'
+  )
 })
 
 But('I miss the first invitation email', () => {
@@ -153,7 +147,7 @@ But('I miss the first invitation email', () => {
 
 But('I miss the first unlock email', () => {
   cy.get('@user').then((user) => {
-    LastEmailPage.lastEmail([user.email, 'Your account has been locked'])
+    LastEmailPage.lastEmail([`Hello ${user.firstName} ${user.lastName}`, 'account has been locked'])
 
     cy.get('@lastEmail').then((lastEmail) => {
       const link = LastEmailPage.extractUnlockAccountLink(lastEmail.last_email.body)
@@ -164,18 +158,18 @@ But('I miss the first unlock email', () => {
 })
 
 And('request another invitation email', () => {
-  MainMenu.admin.getOption('User Management', '').click()
+  TransactionsPage.adminMenu.getOption('User Management', '').click()
 
   cy.get('@user').then((user) => {
-    UsersPage.searchName().type(user.lastName)
-    UsersPage.search().click()
+    UsersPage.searchNameInput().type(user.lastName)
+    UsersPage.submitButton().click()
 
-    UsersPage.searchResults().each((element, index) => {
+    UsersPage.searchResultsTable().each((element, index) => {
       cy.get(`.table-responsive > tbody > tr:nth-child(${index + 1}) td`).eq(2).invoke('text').then((email) => {
         if (email === user.email) {
           cy.get(`.table-responsive > tbody > tr:nth-child(${index + 1})`).invoke('attr', 'id').then((id) => {
-            UsersPage.searchResultEdit(id).click()
-            EditUserPage.resendInvite().click()
+            UsersPage.searchResultEditButton(id).click()
+            EditUserPage.resendInviteButton().click()
           })
         }
       })
@@ -184,17 +178,11 @@ And('request another invitation email', () => {
 })
 
 Then('the TCM will confirm the user has been reinvited', () => {
-  cy.get('.col > .alert')
-    .should(
-      'contain.text',
-      'User reinvited'
-    )
+  cy.alertShouldContain('User reinvited')
 })
 
 Then('I will see confirmation an unlock email has been sent', () => {
-  cy.get('.col > .alert')
-    .should(
-      'contain.text',
-      'If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.'
-    )
+  cy.alertShouldContain(
+    'If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.'
+  )
 })

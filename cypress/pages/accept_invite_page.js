@@ -1,22 +1,19 @@
-class AcceptInvitePage {
-  static visit (inviteLink) {
-    cy.visit(inviteLink)
+import BasePage from './base_page'
+
+class AcceptInvitePage extends BasePage {
+  static confirm () {
+    cy.get('h1').should('contain', 'Set a password')
+    cy.url().should('include', '/auth/invitation/accept')
   }
 
-  static mainHeading () {
-    return cy.get('h2')
-  }
+  // Elements
 
-  static password () {
+  static passwordInput () {
     return cy.get('input#user_password')
   }
 
-  static passwordConfirmation () {
+  static passwordConfirmationInput () {
     return cy.get('input#user_password_confirmation')
-  }
-
-  static setPassword () {
-    return cy.get('input[name="commit"]')
   }
 }
 

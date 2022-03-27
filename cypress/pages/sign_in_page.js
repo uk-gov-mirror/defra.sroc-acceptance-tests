@@ -1,26 +1,27 @@
-class SignInPage {
+import BasePage from './base_page'
+
+class SignInPage extends BasePage {
+  static confirm () {
+    cy.get('h1').should('contain', 'Sign in')
+    cy.url().should('include', '/auth/sign_in')
+  }
+
   static visit () {
     cy.visit('/auth/sign_in')
   }
 
-  static mainHeading () {
-    return cy.get('h1')
-  }
+  // Elements
 
-  static email () {
+  static emailInput () {
     return cy.get('#user_email')
-  }
-
-  static password () {
-    return cy.get('#user_password')
-  }
-
-  static logIn () {
-    return cy.get('[name=commit]')
   }
 
   static forgotPasswordLink () {
     return cy.get('a[href="/auth/password/new"]')
+  }
+
+  static passwordInput () {
+    return cy.get('#user_password')
   }
 
   static resendUnlockLink () {

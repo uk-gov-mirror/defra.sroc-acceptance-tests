@@ -1,36 +1,34 @@
-class AddUserPage {
-  static mainHeading () {
-    return cy.get('h1')
+import BaseAppPage from './base_app_page'
+
+class AddUserPage extends BaseAppPage {
+  static confirm () {
+    cy.get('h1').should('contain', 'Add User Account')
+    cy.url().should('include', '/users/new')
   }
 
-  static email () {
+  // elements
+
+  static cancelButton () {
+    return cy.get('a.btn-secondary')
+  }
+
+  static emailInput () {
     return cy.get('input#user_email')
   }
 
-  static firstName () {
-    return cy.get('input#user_first_name')
-  }
-
-  static lastName () {
-    return cy.get('input#user_last_name')
-  }
-
-  static enabled () {
+  static enabledCheckbox () {
     return cy.get('input#user_enabled')
   }
 
-  static role (option) {
-    const options = {
-      'Read-only User': 'input#role_read_only',
-      'Read-only + Export': 'input#role_read_only_export',
-      'Billing Admin': 'role_billing',
-      'System Admin': 'role_admin'
-    }
-
-    return cy.get(options[option])
+  static firstNameInput () {
+    return cy.get('input#user_first_name')
   }
 
-  static regimeAccess (option) {
+  static lastNameInput () {
+    return cy.get('input#user_last_name')
+  }
+
+  static regimeAccessCheckbox (option) {
     const options = {
       Installations: 'input#user_regime_users_attributes_0_enabled',
       Waste: 'input#user_regime_users_attributes_1_enabled',
@@ -40,12 +38,15 @@ class AddUserPage {
     return cy.get(options[option])
   }
 
-  static addAndInviteUser () {
-    return cy.get('input[name="commit"]')
-  }
+  static roleRadioButton (option) {
+    const options = {
+      'Read-only User': 'input#role_read_only',
+      'Read-only + Export': 'input#role_read_only_export',
+      'Billing Admin': 'role_billing',
+      'System Admin': 'role_admin'
+    }
 
-  static cancel () {
-    return cy.get('a.btn-secondary')
+    return cy.get(options[option])
   }
 }
 

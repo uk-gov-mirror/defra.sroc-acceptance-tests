@@ -33,9 +33,9 @@ import SignInPage from '../pages/sign_in_page'
  */
 Cypress.Commands.add('signIn', (email, password = Cypress.env('PASSWORD')) => {
   SignInPage.visit()
-  SignInPage.email().type(email)
-  SignInPage.password().type(password, { log: false })
-  SignInPage.logIn().click()
+  SignInPage.emailInput().type(email)
+  SignInPage.passwordInput().type(password, { log: false })
+  SignInPage.submitButton().click()
 })
 
 /**
@@ -118,4 +118,18 @@ Cypress.Commands.add('addUser', (user) => {
         }
       })
     })
+})
+
+/**
+ * Use when you want to check an alert contains a certain message
+ *
+ * An action will often lead to alert appearing that is shown on the page after the one we have been interacting with.
+ * To avoid importing the landing page into steps just to check its alert i.e. if we'd added this method to BasePage.js,
+ * we instead add it as a custom command.
+ *
+ * It means we can check the alert without first having to declare the page we are on. But having it as a command means
+ * we can define in just one place what the selector for our alerts is.
+ */
+Cypress.Commands.add('alertShouldContain', (text) => {
+  cy.get('.col > .alert').should('contain.text', text)
 })

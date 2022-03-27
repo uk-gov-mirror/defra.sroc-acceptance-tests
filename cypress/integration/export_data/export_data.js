@@ -1,15 +1,9 @@
-import { When, Then, And } from 'cypress-cucumber-preprocessor/steps'
+import { Then, And } from 'cypress-cucumber-preprocessor/steps'
 import ExportDataPage from '../../pages/export_data_page'
 import TransactionsPage from '../../pages/transactions_page'
 
-When('I select the {string} regime', (regime) => {
-  TransactionsPage.regimeMenu().click()
-  TransactionsPage.regimeMenuItem(regime).click()
-})
-
 And('I proceed to view file download details', () => {
-  TransactionsPage.transactionMenu().click()
-  TransactionsPage.downloadTransactionDataMenuItem().click()
+  TransactionsPage.transactionsMenu.getOption('Download Transaction Data').click()
 })
 
 Then('I can view the Data Protection Notice', () => {
@@ -17,6 +11,5 @@ Then('I can view the Data Protection Notice', () => {
 })
 
 And('I can download transaction data', () => {
-  ExportDataPage.downloadBtn().should('have.attr', 'href', '/regimes/pas/data_export/download')
-  // DownloadTransactionFilePage.downloadBtn().click()
+  ExportDataPage.downloadButton().should('have.attr', 'href', '/regimes/pas/data_export/download')
 })

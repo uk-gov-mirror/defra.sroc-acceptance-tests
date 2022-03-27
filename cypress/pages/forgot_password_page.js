@@ -1,14 +1,15 @@
-class ForgotPasswordPage {
-  static mainHeading () {
-    return cy.get('h1')
+import BasePage from './base_page'
+
+class ForgotPasswordPage extends BasePage {
+  static confirm () {
+    cy.get('h1').should('contain', 'Forgot your password?')
+    cy.url().should('include', '/auth/password/new')
   }
 
-  static email () {
+  // Elements
+
+  static emailInput () {
     return cy.get('input#user_email')
-  }
-
-  static sendMeResetPasswordInstructions () {
-    return cy.get('input[name=commit]')
   }
 }
 

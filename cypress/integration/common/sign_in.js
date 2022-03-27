@@ -3,8 +3,8 @@ import SignInPage from '../../pages/sign_in_page'
 
 Given('I sign in as the {string} user', (user) => {
   SignInPage.visit()
-  SignInPage.email().type(Cypress.config().users[user].email)
-  SignInPage.password().type(Cypress.env('PASSWORD'))
+  SignInPage.emailInput().type(Cypress.config().users[user].email)
+  SignInPage.passwordInput().type(Cypress.env('PASSWORD'))
 
-  SignInPage.logIn().click()
+  SignInPage.submitButton().click()
 })

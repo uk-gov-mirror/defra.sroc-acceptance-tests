@@ -2,27 +2,27 @@ import { And, When, Then, But } from 'cypress-cucumber-preprocessor/steps'
 import TransactionsPage from '../../pages/transactions_page'
 
 When('I see the transactions page', () => {
-  TransactionsPage.mainHeading().contains('Transactions to be billed')
+  TransactionsPage.confirm()
 })
 
 Then('I should see the admin menu', () => {
-  TransactionsPage.adminMenu().should('be.visible')
+  TransactionsPage.adminMenu.menuLink().should('be.visible')
 })
 
 But('I should not see the admin menu', () => {
-  TransactionsPage.adminMenu().should('not.exist')
+  TransactionsPage.adminMenu.menuLink().should('not.exist')
 })
 
 Then('I should see the billing menu', () => {
-  TransactionsPage.billingMenu().should('be.visible')
+  TransactionsPage.annualBillingMenu.menuLink().should('be.visible')
 })
 
 But('I should not see the billing menu', () => {
-  TransactionsPage.billingMenu().should('not.exist')
+  TransactionsPage.annualBillingMenu.menuLink().should('not.exist')
 })
 
 Then('I should see the transactions menu', () => {
-  TransactionsPage.transactionMenu().should('be.visible')
+  TransactionsPage.transactionsMenu.menuLink().should('be.visible')
 })
 
 And('I should see download transactions', () => {
@@ -35,5 +35,5 @@ But('I should not see download transactions', () => {
 
 Then('I should only see the {string} regime', (regime) => {
   cy.get('.navbar-text').contains(regime, { matchCase: false })
-  TransactionsPage.regimeMenu().should('not.exist')
+  TransactionsPage.regimeMenu.menuLink().should('not.exist')
 })

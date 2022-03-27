@@ -5,5 +5,5 @@ Feature: Transactions
 
   Scenario: Search for customer
     When I select the 'Water Quality' regime
-     And I search for the customer 'A60425822C'
-    Then I see only results for customer 'A60425822C'
+    And I search for the customer 'A61000001C'
+    Then I see only results for customer 'A61000001C'

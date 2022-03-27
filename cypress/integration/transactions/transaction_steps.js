@@ -1,4 +1,4 @@
-import { Then, When, And, Before } from 'cypress-cucumber-preprocessor/steps'
+import { Then, And, Before } from 'cypress-cucumber-preprocessor/steps'
 import TransactionsPage from '../../pages/transactions_page'
 
 Before(() => {
@@ -17,23 +17,14 @@ Before(() => {
   // available throughout, and to keep the tests a little cleaner.
   //
   // https://docs.cypress.io/guides/guides/network-requests.html#Waiting
-  cy.server()
-  cy.route({
-    method: 'GET',
-    url: '/regimes/cfd/transactions*'
-  }).as('getTransactions')
-})
-
-When('I select the {string} regime', (regime) => {
-  TransactionsPage.regimeMenu().click()
-  TransactionsPage.regimeMenuItem(regime).click()
+  cy.intercept('GET', '**/regimes/*/transactions?search=*').as('getSearch')
 })
 
 And('I search for the customer {string}', (customer) => {
-  TransactionsPage.search().type(customer)
-  TransactionsPage.searchBtn().click()
+  TransactionsPage.searchInput().type(customer)
+  TransactionsPage.submitButton().click()
 
-  cy.wait('@getTransactions')
+  cy.wait('@getSearch')
 })
 
 Then('I see only results for customer {string}', (customer) => {

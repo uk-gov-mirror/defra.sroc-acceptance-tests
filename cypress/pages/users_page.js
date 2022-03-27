@@ -1,26 +1,27 @@
-class UsersPage {
-  static mainHeading () {
-    return cy.get('h1')
+import BaseAppPage from './base_app_page'
+
+class UsersPage extends BaseAppPage {
+  static confirm () {
+    cy.get('h1').should('contain', 'Users')
+    cy.url().should('include', '/users')
   }
 
-  static addUserAccount () {
+  // Elements
+
+  static addUserAccountButton () {
     return cy.get('button#new-user')
   }
 
-  static searchName () {
+  static searchNameInput () {
     return cy.get('input#search[type="search"]')
   }
 
-  static searchResults () {
-    return cy.get('table.table-responsive > tbody > tr')
-  }
-
-  static searchResultEdit (id) {
+  static searchResultEditButton (id) {
     return cy.get(`a.btn-success[href="/users/${id}/edit"]`)
   }
 
-  static search () {
-    return cy.get('[name=commit]')
+  static searchResultsTable () {
+    return cy.get('table.table-responsive > tbody > tr')
   }
 }
 

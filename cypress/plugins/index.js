@@ -125,6 +125,22 @@ module.exports = (on, config) => {
               reject(error)
             })
       })
+    },
+
+    regime (identifier) {
+      const regimes = {
+        pas: 'Installations',
+        wml: 'Waste',
+        cfd: 'Water Quality'
+      }
+      let result
+      for (const [key, value] of Object.entries(regimes)) {
+        if (key === identifier.toLowerCase() || value.toLowerCase() === identifier.toLowerCase()) {
+          result = { slug: key, name: value }
+        }
+      }
+
+      return result
     }
   })
 

@@ -11,11 +11,11 @@ When('I follow the link to reset my password', () => {
       const link = LastEmailPage.extractResetPasswordLink(lastEmail.last_email.body)
 
       cy.visit(link).then(() => {
-        ChangePasswordPage.mainHeading().should('contain', 'Change your password')
+        ChangePasswordPage.confirm()
 
-        ChangePasswordPage.password().type(Cypress.env('PASSWORD'), { log: false })
-        ChangePasswordPage.passwordConfirmation().type(Cypress.env('PASSWORD'), { log: false })
-        ChangePasswordPage.changeMyPassword().click()
+        ChangePasswordPage.passwordInput().type(Cypress.env('PASSWORD'), { log: false })
+        ChangePasswordPage.passwordConfirmationInput().type(Cypress.env('PASSWORD'), { log: false })
+        ChangePasswordPage.submitButton().click()
       })
     })
   })
