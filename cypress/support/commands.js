@@ -133,3 +133,22 @@ Cypress.Commands.add('addUser', (user) => {
 Cypress.Commands.add('alertShouldContain', (text) => {
   cy.get('.col > .alert').should('contain.text', text)
 })
+
+/**
+ * Use when you want to clean the database of transaction based data
+ *
+ * Some of the features depend on the data being in a known state. That way expectations about, for example, finding
+ * certain transactions to approve will succeed.
+ *
+ * The `/clean` command in the TCM doesn't completely reset the DB. Lookup tables such as permit categories, and records
+ * such as user accounts are left untouched. But anything to do with transactions, transaction files, and import and
+ * export history is all deleted and the identifiers restarted.
+ */
+Cypress.Commands.add('cleanDb', () => {
+  cy.log('Cleaning the database')
+  cy.request({
+    log: false,
+    method: 'GET',
+    url: '/clean'
+  }).its('status', { log: false }).should('equal', 200)
+})
