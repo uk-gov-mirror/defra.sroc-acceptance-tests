@@ -1,7 +1,5 @@
 # SROC acceptance tests
 
-> Work in progress! Intended to replace [sroc-tcm-acceptance-tests]()https://github.com/DEFRA/sroc-tcm-acceptance-tests. It includes some initial feature tests which run successfully across all non-production environments.
-
 The Tactical Charging Module (TCM) is a web application designed to enable billing adminstrators to apply new categories to permit charges to enable correct amounts to be processed.
 
 This service is an internally facing service only, used by billing administration staff.
