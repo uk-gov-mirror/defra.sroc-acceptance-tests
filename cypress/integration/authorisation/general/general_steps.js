@@ -1,5 +1,5 @@
 import { And, When, Then, But } from 'cypress-cucumber-preprocessor/steps'
-import TransactionsPage from '../../pages/transactions_page'
+import TransactionsPage from '../../../pages/transactions_page'
 
 When('I see the transactions page', () => {
   TransactionsPage.confirm()

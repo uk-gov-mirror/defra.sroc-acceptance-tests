@@ -1,4 +1,4 @@
-Feature: Review Annual Billing
+Feature: Annual Billing
 
   Background:
     Given I sign in as the 'admin' user

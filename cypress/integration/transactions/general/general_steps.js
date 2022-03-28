@@ -1,5 +1,5 @@
 import { Then, And, Before } from 'cypress-cucumber-preprocessor/steps'
-import TransactionsPage from '../../pages/transactions_page'
+import TransactionsPage from '../../../pages/transactions_page'
 
 Before(() => {
   // The TCM uses JavaScript and XHR requests to avoid page refreshes. So, for

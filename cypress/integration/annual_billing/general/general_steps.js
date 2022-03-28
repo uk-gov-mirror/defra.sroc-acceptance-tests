@@ -1,7 +1,7 @@
 import { Then, And } from 'cypress-cucumber-preprocessor/steps'
-import AnnualBillingPage from '../../pages/annual_billing_page'
-import AnnualBillingFileDetailsPage from '../../pages/annual_billing_file_details_page'
-import TransactionsPage from '../../pages/transactions_page'
+import AnnualBillingPage from '../../../pages/annual_billing_page'
+import AnnualBillingFileDetailsPage from '../../../pages/annual_billing_file_details_page'
+import TransactionsPage from '../../../pages/transactions_page'
 
 And('I proceed to review Annual Billing details', () => {
   cy.get('@regime').then((regime) => {

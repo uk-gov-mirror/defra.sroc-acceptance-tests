@@ -1,4 +1,4 @@
-Feature: Exporting Transaction Data
+Feature: Data Export
 
   Background:
     Given I sign in as the 'admin' user
@@ -6,5 +6,5 @@ Feature: Exporting Transaction Data
   Scenario: Download transaction data
     When I select the 'Installations' regime
      And I proceed to view file download details
-    Then I can view the Data Protection Notice 
+    Then I can view the Data Protection Notice
      And I can download transaction data

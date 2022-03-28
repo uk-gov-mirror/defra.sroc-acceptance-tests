@@ -1,5 +1,5 @@
 import { Given, When } from 'cypress-cucumber-preprocessor/steps'
-import SignInPage from '../../pages/sign_in_page'
+import SignInPage from '../../../pages/sign_in_page'
 
 Given('I visit the sign in page', () => {
   SignInPage.visit()
