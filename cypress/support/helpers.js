@@ -7,6 +7,22 @@ import { faker } from '@faker-js/faker'
 // it as a helper helps reduce the complexity of the steps and makes the project a little more maintainable.
 
 /**
+ * Use to determine which fixture file (test transaction import file) to use based on a regime slug
+ *
+ * We could have had steps in features just state the file name. But we felt it would read better in the scenario if
+ * instead the regime was stated, for example, "Given I am starting with known cfd data".
+ */
+export function fixturePickerHelper (regimeSlug) {
+  const fixtures = {
+    cfd: 'cfdai394.dat.csv',
+    pas: 'pasai394.dat.csv',
+    wml: 'wmlai394.dat.csv'
+  }
+
+  return fixtures[regimeSlug]
+}
+
+/**
  * Helper that generates an object that represents a TCM user
  *
  * The values can then be used when creating a new user in the service
