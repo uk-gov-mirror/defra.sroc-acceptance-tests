@@ -223,19 +223,6 @@ Then('I set the temporary cessation flag for the first transaction', () => {
   cy.get('.table-responsive > tbody > tr:first-child select.temporary-cessation-select').select('Y').should('have.value', 'true')
 })
 
-And('exclude the transaction', () => {
-  cy.get('button.exclude-button').click()
-  cy.get('input[type="submit"][data-disable-with="Exclude Transaction"]').click()
-  cy.get('span.badge-danger').should('contain.text', 'Marked for Exclusion')
-})
-
-And('reinstate the transaction', () => {
-  cy.get('input[type="submit"][data-disable-with="Reinstate for Billing"]').click()
-  cy.get('button.exclude-button').should('be.visible')
-
-  cy.wait('@getTransaction').its('response.statusCode').should('eq', 200)
-})
-
 And('approve the transactions for billing', () => {
   cy.get('button.approve-all-btn').click()
 

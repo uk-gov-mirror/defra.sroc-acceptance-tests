@@ -137,19 +137,6 @@ Then('I go back using the link', () => {
   cy.get('.back-link').click()
 })
 
-And('exclude the transaction', () => {
-  cy.get('button.exclude-button').click()
-  cy.get('input[type="submit"][data-disable-with="Exclude Transaction"]').click()
-  cy.get('span.badge-danger').should('contain.text', 'Marked for Exclusion')
-})
-
-And('reinstate the transaction', () => {
-  cy.get('input[type="submit"][data-disable-with="Reinstate for Billing"]').click()
-  cy.get('button.exclude-button').should('be.visible')
-
-  cy.wait('@getTransaction').its('response.statusCode').should('eq', 200)
-})
-
 Then('I click the export button and check the export modal displays', () => {
   cy.get('button.table-export-btn').click()
   // NOTE: Whilst handy to confirm the dialog has appeared this is actually here to force the tests to wait for the

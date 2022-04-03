@@ -29,8 +29,6 @@ Feature: PAS (Installations) Legacy
     And the main heading is 'Transaction change history'
     And the first event is Transaction imported from file
     Then I go back using the link
-    And exclude the transaction
-    And reinstate the transaction
     Then I go back using the link
     Then I go back using the link
     Then I go back using the link
