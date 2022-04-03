@@ -66,7 +66,3 @@ Feature: PAS (Installations) Legacy
     Then I click the export button and check the export modal displays
     Then I generate the pre-sroc transaction file
     Then I see confirmation the transaction file is queued for export
-    # The section that checked downloading transaction data was commented out in the legacy test.
-    And I select 'Download Transaction Data' from the Transactions menu
-    And the main heading is 'Download Transaction Data'
-    And I confirm the data protection notice is displayed

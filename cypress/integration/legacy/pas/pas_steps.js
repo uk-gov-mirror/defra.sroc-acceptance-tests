@@ -335,9 +335,3 @@ Then('I generate the pre-sroc transaction file', () => {
 
   cy.wait('@getRetrospectivesSearch').its('response.statusCode').should('eq', 200)
 })
-
-And('I confirm the data protection notice is displayed', () => {
-  cy.get('.card-header')
-    .should('contain', 'Data Protection Notice')
-    .should('be.visible')
-})

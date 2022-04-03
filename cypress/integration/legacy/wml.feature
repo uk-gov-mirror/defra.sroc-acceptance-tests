@@ -56,6 +56,3 @@ Feature: WML (Installations) Legacy
     And I select 'Transaction History' from the Transactions menu
     And the main heading is 'Transaction History'
     Then I click the export button and check the export modal displays
-    And I select 'Download Transaction Data' from the Transactions menu
-    And the main heading is 'Download Transaction Data'
-    And I confirm the data protection notice is displayed
