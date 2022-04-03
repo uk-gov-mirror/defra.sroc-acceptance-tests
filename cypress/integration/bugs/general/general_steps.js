@@ -28,7 +28,7 @@ And('I search for permit reference {word}', (reference) => {
 })
 
 And('I see results', () => {
-  TransactionsPage.resultsTable().find('tr').should('have.length.greaterThan', 1)
+  TransactionsPage.table.rows().should('have.length.greaterThan', 1)
 })
 
 Then('I select {string} from the transactions menu', (optionText) => {
@@ -36,7 +36,7 @@ Then('I select {string} from the transactions menu', (optionText) => {
 })
 
 And('I do not see results', () => {
-  TransactionsPage.resultsTable().find('tr').should('have.length', 1)
+  TransactionsPage.table.rows().should('have.length', 1)
 })
 
 But('if I clear the search field and search again', () => {

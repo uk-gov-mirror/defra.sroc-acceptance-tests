@@ -1,6 +1,11 @@
 import BaseAppPage from './base_app_page'
+import TransactionsToBeBilledTable from './tables/transactions_to_be_billed_table'
 
 class TransactionsPage extends BaseAppPage {
+  static get table () {
+    return TransactionsToBeBilledTable
+  }
+
   static confirm () {
     cy.get('h1').should('contain', 'Transactions to be billed')
     // As transactions is the root path when authenticated we can't guarantee we'll have a url to assert against.
@@ -16,14 +21,6 @@ class TransactionsPage extends BaseAppPage {
 
   static searchInput () {
     return cy.get('#search')
-  }
-
-  static resultsTable () {
-    return cy.get('.table')
-  }
-
-  static customerColumn () {
-    return cy.get('.table > tbody > tr > td:nth-child(4)')
   }
 }
 

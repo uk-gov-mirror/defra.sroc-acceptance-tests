@@ -76,7 +76,7 @@ Then('the first record has file reference {string}', (fileReference) => {
 })
 
 And('I log the number of transactions displayed', () => {
-  TransactionsPage.resultsTable().find('tbody').find('tr').then((rows) => {
+  TransactionsPage.table.rows().then((rows) => {
     cy.log(`Number of transactions listed is ${rows.length}`)
   })
 })

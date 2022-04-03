@@ -1,4 +1,4 @@
-import { Then, And, Before } from 'cypress-cucumber-preprocessor/steps'
+import { Then, When, Before } from 'cypress-cucumber-preprocessor/steps'
 import TransactionsPage from '../../../pages/transactions_page'
 
 Before(() => {
@@ -20,7 +20,7 @@ Before(() => {
   cy.intercept('GET', '**/regimes/*/transactions?search=*').as('getSearch')
 })
 
-And('I search for the customer {string}', (customer) => {
+When('I search for the customer {string}', (customer) => {
   TransactionsPage.searchInput().type(customer)
   TransactionsPage.submitButton().click()
 
@@ -28,7 +28,7 @@ And('I search for the customer {string}', (customer) => {
 })
 
 Then('I see only results for customer {string}', (customer) => {
-  TransactionsPage.customerColumn().each(($el) => {
+  TransactionsPage.table.cells('Customer', 'wml').each(($el) => {
     expect($el.text()).to.have.string(customer)
   })
 })

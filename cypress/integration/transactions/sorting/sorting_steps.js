@@ -1,7 +1,5 @@
 import { Then, When, Before } from 'cypress-cucumber-preprocessor/steps'
 
-import { columnPickerHelper } from '../../../support/helpers'
-
 import SignInPage from '../../../pages/sign_in_page'
 import TransactionsPage from '../../../pages/transactions_page'
 
@@ -23,7 +21,7 @@ Then('I am on the Transactions to be Billed page', () => {
 
 When('I sort by {string} in {word} order', (column, sortOrder) => {
   cy.get('@regime').then((regime) => {
-    const dataColumn = columnPickerHelper(column, regime.slug)
+    const dataColumn = TransactionsPage.table.columnPicker(column, regime.slug)
 
     const sortOrders = {
       ascending: { class: 'sorted-asc', caret: 'oi-caret-top' },
@@ -62,8 +60,6 @@ When('I sort by {string} in {word} order', (column, sortOrder) => {
 
 Then('I see {string} as the first {string}', (value, column) => {
   cy.get('@regime').then((regime) => {
-    const dataColumn = columnPickerHelper(column, regime.slug)
-
-    TransactionsPage.resultsTable().find(`td:nth-child(${dataColumn.index})`).should('contain.text', value)
+    TransactionsPage.table.cell(0, column, regime.slug).should('contain.text', value)
   })
 })
