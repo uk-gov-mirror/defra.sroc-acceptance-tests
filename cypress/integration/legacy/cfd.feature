@@ -20,22 +20,8 @@ Feature: CFD (Water Quality) Legacy
     And I log which region is selected in the search bar
     And I select All for financial year in the search bar
     And I select 50 for items per page in the paging info bar
-    Then I click the column title 'File Reference' and it sorts the transactions in ascending order
-    Then I click the column title 'File Reference' and it sorts the transactions in descending order
-    Then I click the column title 'File Date' and it sorts the transactions in descending order
-    Then I click the column title 'File Date' and it sorts the transactions in ascending order
-    Then I click the column title 'Customer' and it sorts the transactions in ascending order
-    Then I click the column title 'Customer' and it sorts the transactions in descending order
-    Then I click the column title 'Consent' and it sorts the transactions in descending order
-    Then I click the column title 'Consent' and it sorts the transactions in ascending order
     And I see the 'Ver' column is displayed
     And I see the 'Dis' column is displayed
-    Then I click the column title '%' and it sorts the transactions in ascending order
-    Then I click the column title '%' and it sorts the transactions in descending order
-    Then I click the column title 'Period' and it sorts the transactions in descending order
-    Then I click the column title 'Period' and it sorts the transactions in ascending order
-    Then I click the column title 'Category' and it sorts the transactions in ascending order
-    Then I click the column title 'Category' and it sorts the transactions in descending order
     Then I set the temporary cessation flag for the first transaction
     Then I open the transaction detail page for the first transaction
     And the main heading is 'Transaction detail'

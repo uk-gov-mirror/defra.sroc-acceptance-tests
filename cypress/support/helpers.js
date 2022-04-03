@@ -7,6 +7,60 @@ import { faker } from '@faker-js/faker'
 // it as a helper helps reduce the complexity of the steps and makes the project a little more maintainable.
 
 /**
+ * Use to get column details for a particular regime's transactions to be billed results table
+ *
+ * Written primarily to support our `cypress/integration/transactions/sorting.feature` given a column name (as seen in
+ * the UI) and regime it will return its data-column name and TD nth-child position. We can then use this to grab the
+ * value of a particular field.
+ *
+ * We need to know the regime because the results table is different for each one.
+ *
+ * If the a matching column is not found it will throw an error. This is intended to help highlight errors caused by
+ * typos of using the wrong case quickly.
+ */
+export function columnPickerHelper (column, regime) {
+  const sharedColumns = {
+    Customer: { name: 'customer_reference', index: 4 },
+    'File Date': { name: 'file_date', index: 3 },
+    'File Reference': { name: 'file_reference', index: 2 }
+  }
+
+  const regimeColumns = {
+    pas: {
+      Band: { name: 'compliance_band', index: 9 },
+      Category: { name: 'sroc_category', index: 7 },
+      'Original Permit': { name: 'original_permit_reference', index: 6 },
+      Period: { name: 'period', index: 11 },
+      Permit: { name: 'permit_reference', index: 5 }
+    },
+    cfd: {
+      Category: { name: 'sroc_category', index: 8 },
+      Consent: { name: 'consent_reference', index: 5 },
+      Period: { name: 'period', index: 12 },
+      '%': { name: 'variation', index: 10 }
+    },
+    wml: {
+      Band: { name: 'compliance_band', index: 8 },
+      Category: { name: 'sroc_category', index: 6 },
+      Period: { name: 'period', index: 10 },
+      Permit: { name: 'permit_reference', index: 5 }
+    }
+  }
+
+  const columns = {
+    ...sharedColumns,
+    ...regimeColumns[regime]
+  }
+  console.log(columns)
+
+  if (column in columns) {
+    return columns[column]
+  }
+
+  throw new Error(`Column '${column}' is unknown. Check your spelling and case!`)
+}
+
+/**
  * Use to determine which fixture file (test transaction import file) to use based on a regime slug
  *
  * We could have had steps in features just state the file name. But we felt it would read better in the scenario if
@@ -63,4 +117,4 @@ export function generateStringHelper (length = 8) {
   return faker.random.alpha({ count: length })
 }
 
-export default { generateUserHelper, generateStringHelper }
+export default { columnPickerHelper, fixturePickerHelper, generateUserHelper, generateStringHelper }

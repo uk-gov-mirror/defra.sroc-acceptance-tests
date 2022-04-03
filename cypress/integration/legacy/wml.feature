@@ -21,20 +21,6 @@ Feature: WML (Installations) Legacy
     # In CFD and PAS the legacy test selects All from the financial year drop down. In WML the code is commented out.
     # This is most likely because when manually viewing the page 'All' is not an option
     And I select 50 for items per page in the paging info bar
-    Then I click the column title 'File Reference' and it sorts the transactions in ascending order
-    Then I click the column title 'File Reference' and it sorts the transactions in descending order
-    Then I click the column title 'File Date' and it sorts the transactions in descending order
-    Then I click the column title 'File Date' and it sorts the transactions in ascending order
-    Then I click the column title 'Customer' and it sorts the transactions in ascending order
-    Then I click the column title 'Customer' and it sorts the transactions in descending order
-    Then I click the column title 'Permit' and it sorts the transactions in descending order
-    Then I click the column title 'Permit' and it sorts the transactions in ascending order
-    Then I click the column title 'Band' and it sorts the transactions in ascending order
-    Then I click the column title 'Band' and it sorts the transactions in descending order
-    Then I click the column title 'Period' and it sorts the transactions in descending order
-    Then I click the column title 'Period' and it sorts the transactions in ascending order
-    Then I click the column title 'Category' and it sorts the transactions in ascending order
-    Then I click the column title 'Category' and it sorts the transactions in descending order
     Then I set the temporary cessation flag for the first transaction
     Then I open the transaction detail page for the first transaction
     And the main heading is 'Transaction detail'

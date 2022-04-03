@@ -107,32 +107,6 @@ And('I select {word} for items per page in the paging info bar', (option) => {
   })
 })
 
-Then('I click the column title {string} and it sorts the transactions in {word} order', (sort, sortOrder) => {
-  const sorts = {
-    'File Reference': 'file_reference',
-    'File Date': 'file_date',
-    Customer: 'customer_reference',
-    Consent: 'consent_reference',
-    Category: 'sroc_category',
-    '%': 'variation',
-    Period: 'period'
-  }
-
-  const sortOrders = {
-    ascending: 'oi-caret-top',
-    descending: 'oi-caret-bottom'
-  }
-
-  cy.get(`th > [data-column="${sorts[sort]}"]`).click()
-
-  cy.wait('@getSearch').its('response.statusCode').should('eq', 200)
-
-  cy.get(`th > [data-column="${sorts[sort]}"]`).then((element) => {
-    expect(element).to.have.class('sorted')
-    expect(element.find('span.oi')).to.have.class(sortOrders[sortOrder])
-  })
-})
-
 Then('I see the {string} column is displayed', (columnName) => {
   cy.get('span[aria-hidden="true"]').contains(columnName).then((element) => {
     expect(element).to.be.visible

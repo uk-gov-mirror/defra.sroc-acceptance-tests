@@ -20,24 +20,6 @@ Feature: PAS (Installations) Legacy
     And I log which region is selected in the search bar
     And I select All for financial year in the search bar
     And I select 50 for items per page in the paging info bar
-    # The order of the sort steps matters. Depending on the order the columns are clicked will determine whether you
-    # should expect a column to be in ascending or descending order
-    Then I click the column title 'File Reference' and it sorts the transactions in ascending order
-    Then I click the column title 'File Reference' and it sorts the transactions in descending order
-    Then I click the column title 'File Date' and it sorts the transactions in descending order
-    Then I click the column title 'File Date' and it sorts the transactions in ascending order
-    Then I click the column title 'Customer' and it sorts the transactions in ascending order
-    Then I click the column title 'Customer' and it sorts the transactions in descending order
-    Then I click the column title 'Permit' and it sorts the transactions in descending order
-    Then I click the column title 'Permit' and it sorts the transactions in ascending order
-    Then I click the column title 'Original Permit' and it sorts the transactions in ascending order
-    Then I click the column title 'Original Permit' and it sorts the transactions in descending order
-    Then I click the column title 'Band' and it sorts the transactions in descending order
-    Then I click the column title 'Band' and it sorts the transactions in ascending order
-    Then I click the column title 'Period' and it sorts the transactions in ascending order
-    Then I click the column title 'Period' and it sorts the transactions in descending order
-    Then I click the column title 'Category' and it sorts the transactions in descending order
-    Then I click the column title 'Category' and it sorts the transactions in ascending order
     Then I set the temporary cessation flag for the first transaction
     Then I open the transaction detail page for the first transaction
     And the main heading is 'Transaction detail'
