@@ -182,16 +182,6 @@ And('the sub heading {string} is visible', (heading) => {
     .should('be.visible')
 })
 
-Then('I open the transaction history page', () => {
-  cy.get('a.btn-outline-info').click()
-
-  cy.wait('@getTransactionHistory').its('response.statusCode').should('eq', 200)
-})
-
-And('the first event is Transaction imported from file', () => {
-  cy.get('tbody > tr:first-child > td:first-child').should('contain.text', 'Transaction imported from file')
-})
-
 Then('I go back using the link', () => {
   cy.get('.back-link').click()
 })
@@ -217,10 +207,6 @@ Then('I click the export button and check the export modal displays', () => {
   cy.get('#data-protection-dialog button.btn[data-dismiss="modal"]')
     .should('be.visible')
     .click()
-})
-
-Then('I set the temporary cessation flag for the first transaction', () => {
-  cy.get('.table-responsive > tbody > tr:first-child select.temporary-cessation-select').select('Y').should('have.value', 'true')
 })
 
 And('approve the transactions for billing', () => {

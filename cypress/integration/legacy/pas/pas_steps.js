@@ -113,24 +113,10 @@ And('I select {word} for items per page in the paging info bar', (option) => {
   })
 })
 
-Then('I set the temporary cessation flag for the first transaction', () => {
-  cy.get('.table-responsive > tbody > tr:first-child select.temporary-cessation-select').select('Y').should('have.value', 'true')
-})
-
 Then('I open the transaction detail page for the first transaction', () => {
   cy.get('tbody > tr:first-child button.show-details-button').click()
 
   cy.wait('@getTransaction').its('response.statusCode').should('eq', 200)
-})
-
-Then('I open the transaction history page', () => {
-  cy.get('a.btn-outline-info').click()
-
-  cy.wait('@getTransactionHistory').its('response.statusCode').should('eq', 200)
-})
-
-And('the first event is Transaction imported from file', () => {
-  cy.get('tbody > tr:first-child > td:first-child').should('contain.text', 'Transaction imported from file')
 })
 
 Then('I go back using the link', () => {

@@ -20,15 +20,10 @@ Feature: PAS (Installations) Legacy
     And I log which region is selected in the search bar
     And I select All for financial year in the search bar
     And I select 50 for items per page in the paging info bar
-    Then I set the temporary cessation flag for the first transaction
     Then I open the transaction detail page for the first transaction
     And the main heading is 'Transaction detail'
     And the sub heading 'Suggested category' is visible
     And the sub heading 'Related unbilled transactions' is visible
-    Then I open the transaction history page
-    And the main heading is 'Transaction change history'
-    And the first event is Transaction imported from file
-    Then I go back using the link
     Then I go back using the link
     Then I go back using the link
     Then I go back using the link
