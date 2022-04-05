@@ -28,7 +28,6 @@ Feature: WML (Installations) Legacy
     Then I go back using the link
     Then I go back using the link
     Then I go back using the link
-    Then I click the export button and check the export modal displays
     Then I copy the consent reference from the first transaction
     And search transactions with it
     And all transactions displayed have the same consent reference
@@ -45,7 +44,5 @@ Feature: WML (Installations) Legacy
     And I set region to A
     And I select 'Excluded Transactions' from the Transactions menu
     And the main heading is 'Excluded Transactions'
-    Then I click the export button and check the export modal displays
     And I select 'Transaction History' from the Transactions menu
     And the main heading is 'Transaction History'
-    Then I click the export button and check the export modal displays

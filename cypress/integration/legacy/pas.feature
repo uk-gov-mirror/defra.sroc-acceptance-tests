@@ -27,7 +27,6 @@ Feature: PAS (Installations) Legacy
     Then I go back using the link
     Then I go back using the link
     Then I go back using the link
-    Then I click the export button and check the export modal displays
     Then I copy the consent reference from the first transaction
     And search transactions with it
     And all transactions displayed have the same consent reference
@@ -44,10 +43,8 @@ Feature: PAS (Installations) Legacy
     And I set pre post-sroc to All
     And I select 'Excluded Transactions' from the Transactions menu
     And the main heading is 'Excluded Transactions'
-    Then I click the export button and check the export modal displays
     And I select 'Transaction History' from the Transactions menu
     And the main heading is 'Transaction History'
-    Then I click the export button and check the export modal displays
     Then I set view to 'Pre-April 2018 Transactions to be billed'
     And the main heading is 'Pre-April 2018 Transactions to be billed'
     # At this point in the legacy tests we set the region, clear the search field and then hit search. But with an
@@ -56,6 +53,5 @@ Feature: PAS (Installations) Legacy
     # selection for kicks!
     And I set retrospectives region to A
     And I grab the first record and confirm its period is pre-April 2018
-    Then I click the export button and check the export modal displays
     Then I generate the pre-sroc transaction file
     Then I see confirmation the transaction file is queued for export

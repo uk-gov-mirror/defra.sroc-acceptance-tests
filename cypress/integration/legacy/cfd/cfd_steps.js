@@ -186,29 +186,6 @@ Then('I go back using the link', () => {
   cy.get('.back-link').click()
 })
 
-Then('I click the export button and check the export modal displays', () => {
-  cy.get('button.table-export-btn').click()
-  // NOTE: Whilst handy to confirm the dialog has appeared this is actually here to force the tests to wait for the
-  // dialog until it then tries to get() elements on it
-  cy.get('#data-protection-dialog')
-    .should('have.class', 'show')
-    .should('have.attr', 'aria-modal')
-  cy.get('#data-protection-dialog').should('not.have.attr', 'aria-hidden')
-
-  cy.get('#data-protection-dialog h5.modal-title')
-    .should('be.visible')
-    .should('contain.text', 'Export Transaction Data')
-
-  // TODO: Understand why we need this explicit wait() here. We've confirmed that the modal dialog is open
-  // and visible and that we can access the controls. But without this wait() we find more often than not the
-  // dialog is not dismissed when cancel is clicked which causes an error in the tests
-  cy.wait(500)
-
-  cy.get('#data-protection-dialog button.btn[data-dismiss="modal"]')
-    .should('be.visible')
-    .click()
-})
-
 And('approve the transactions for billing', () => {
   cy.get('button.approve-all-btn').click()
 
