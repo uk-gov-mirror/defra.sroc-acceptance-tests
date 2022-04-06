@@ -1,5 +1,7 @@
 import { Then, When, Before } from 'cypress-cucumber-preprocessor/steps'
+
 import TransactionsPage from '../../../pages/transactions_page'
+import TransactionDetailPage from '../../../pages/transaction_detail_page'
 
 Before(() => {
   // The TCM uses JavaScript and XHR requests to avoid page refreshes. So, for
@@ -31,4 +33,16 @@ Then('I see only results for customer {string}', (customer) => {
   TransactionsPage.table.cells('Customer', 'wml').each(($el) => {
     expect($el.text()).to.have.string(customer)
   })
+})
+
+When('I select the first transaction', () => {
+  TransactionsPage.table.showDetailsButton(0).click()
+})
+
+Then('I see the detail, suggested category and related transactions sections', () => {
+  TransactionDetailPage.confirm()
+
+  cy.get('h1').should('contain', 'Transaction detail').should('be.visible')
+  cy.get('h2').should('contain', 'Suggested category').should('be.visible')
+  cy.get('h2').should('contain', 'Related unbilled transactions').should('be.visible')
 })

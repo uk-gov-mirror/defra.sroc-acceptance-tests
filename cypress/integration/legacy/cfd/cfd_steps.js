@@ -166,24 +166,8 @@ And('the transaction charges will be set', () => {
   })
 })
 
-Then('I open the transaction detail page for the first transaction', () => {
-  cy.get('tbody > tr:first-child button.show-details-button').click()
-
-  cy.wait('@getTransaction').its('response.statusCode').should('eq', 200)
-})
-
 Then('there are no transactions to be billed displayed anymore', () => {
   cy.get('.table-responsive > tbody > tr').should('not.exist')
-})
-
-And('the sub heading {string} is visible', (heading) => {
-  cy.get('h2')
-    .should('contain', heading)
-    .should('be.visible')
-})
-
-Then('I go back using the link', () => {
-  cy.get('.back-link').click()
 })
 
 And('approve the transactions for billing', () => {

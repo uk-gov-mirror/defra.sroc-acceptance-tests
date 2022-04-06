@@ -57,12 +57,6 @@ And('the main heading is {string}', (heading) => {
   cy.get('h1').should('contain', heading)
 })
 
-And('the sub heading {string} is visible', (heading) => {
-  cy.get('h2')
-    .should('contain', heading)
-    .should('be.visible')
-})
-
 And('the user menu says I am signed in as {string}', (username) => {
   MainMenu.user.menuLink().should('contain', username)
 })
@@ -111,16 +105,6 @@ And('I select {word} for items per page in the paging info bar', (option) => {
   cy.get('select#per_page').find(':selected').invoke('text').then((val) => {
     expect(val).to.equal(option)
   })
-})
-
-Then('I open the transaction detail page for the first transaction', () => {
-  cy.get('tbody > tr:first-child button.show-details-button').click()
-
-  cy.wait('@getTransaction').its('response.statusCode').should('eq', 200)
-})
-
-Then('I go back using the link', () => {
-  cy.get('.back-link').click()
 })
 
 Then('I copy the consent reference from the first transaction', () => {

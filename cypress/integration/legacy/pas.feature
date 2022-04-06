@@ -20,13 +20,6 @@ Feature: PAS (Installations) Legacy
     And I log which region is selected in the search bar
     And I select All for financial year in the search bar
     And I select 50 for items per page in the paging info bar
-    Then I open the transaction detail page for the first transaction
-    And the main heading is 'Transaction detail'
-    And the sub heading 'Suggested category' is visible
-    And the sub heading 'Related unbilled transactions' is visible
-    Then I go back using the link
-    Then I go back using the link
-    Then I go back using the link
     Then I copy the consent reference from the first transaction
     And search transactions with it
     And all transactions displayed have the same consent reference
