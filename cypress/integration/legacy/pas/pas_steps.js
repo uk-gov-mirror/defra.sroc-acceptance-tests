@@ -205,24 +205,6 @@ Then('there are no transactions to be billed displayed anymore', () => {
   cy.get('.table-responsive > tbody > tr').should('not.exist')
 })
 
-And('I set region to {word}', (option) => {
-  cy.get('select#region').select(option)
-
-  cy.wait('@getTransactionFileHistory').its('response.statusCode').should('eq', 200)
-})
-
-And('I set pre post-sroc to {word}', (option) => {
-  cy.get('select#prepost').select(option)
-
-  cy.wait('@getTransactionFileHistory').its('response.statusCode').should('eq', 200)
-})
-
-Then('I set view to {string}', (option) => {
-  cy.get('select#mode').select(option)
-
-  cy.wait('@getRetrospectivesSearch').its('response.statusCode').should('eq', 200)
-})
-
 And('I set retrospectives region to {word}', (option) => {
   cy.get('select#region').select(option)
 

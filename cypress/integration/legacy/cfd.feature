@@ -33,15 +33,7 @@ Feature: CFD (Water Quality) Legacy
     Then I see confirmation the transaction file is queued for export
     And I log the transaction filename to prove it can be used in another step
     And there are no transactions to be billed displayed anymore
-    And I select 'Transaction File History' from the Transactions menu
-    And the main heading is 'Transaction File History'
-    And I set region to A
-    And I set pre post-sroc to Post
-    And I select 'Excluded Transactions' from the Transactions menu
-    And the main heading is 'Excluded Transactions'
-    And I select 'Transaction History' from the Transactions menu
-    And the main heading is 'Transaction History'
-    Then I set view to 'Pre-April 2018 Transactions to be billed'
+    And I select 'Pre-April 2018 Transactions to be billed' from the Transactions menu
     And the main heading is 'Pre-April 2018 Transactions to be billed'
     # At this point in the legacy tests we set the region, clear the search field and then hit search. But with an
     # automates test this does nothing. Region A is already selected and the search field is already empty. So, clicking

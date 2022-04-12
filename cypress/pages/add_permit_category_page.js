@@ -3,7 +3,7 @@ import BaseAppPage from './base_app_page'
 class AddPermitCategoryPage extends BaseAppPage {
   static confirm () {
     cy.get('h1').should('contain', 'New Permit Category')
-    cy.url().should('include', '/permit_categories/new')
+    cy.url().should('match', /regimes\/[a-z]{3}\/permit_categories\/new/)
   }
 
   // Elements

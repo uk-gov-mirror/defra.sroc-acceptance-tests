@@ -1,6 +1,6 @@
 import { And, But, Then, When } from 'cypress-cucumber-preprocessor/steps'
 
-import ChangePasswordPage from '../../../pages/change_password_page'
+import ForgotPasswordConfirmPage from '../../../pages/forgot_password_confirm_page'
 import ForgotPasswordPage from '../../../pages/forgot_password_page'
 import LastEmailPage from '../../../pages/last_email_page'
 import ResendUnlockPage from '../../../pages/resend_unlock_page'
@@ -51,11 +51,11 @@ And('I try to accept the first unlock email', () => {
 When('I try to accept the first reset password email', () => {
   cy.get('@firstLink').then((firstLink) => {
     cy.visit(firstLink).then(() => {
-      ChangePasswordPage.confirm()
+      ForgotPasswordConfirmPage.confirm()
 
-      ChangePasswordPage.passwordInput().type(Cypress.env('PASSWORD'), { log: false })
-      ChangePasswordPage.passwordConfirmationInput().type(Cypress.env('PASSWORD'), { log: false })
-      ChangePasswordPage.submitButton().click()
+      ForgotPasswordConfirmPage.passwordInput().type(Cypress.env('PASSWORD'), { log: false })
+      ForgotPasswordConfirmPage.passwordConfirmationInput().type(Cypress.env('PASSWORD'), { log: false })
+      ForgotPasswordConfirmPage.submitButton().click()
     })
   })
 })

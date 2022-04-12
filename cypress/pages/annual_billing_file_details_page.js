@@ -3,7 +3,7 @@ import BaseAppPage from './base_app_page'
 class AnnualBillingFileDetailsPage extends BaseAppPage {
   static confirm () {
     cy.get('h1').should('contain', 'Annual Billing Data File Details')
-    cy.url().should('include', '/annual_billing_data_files')
+    cy.url().should('match', /regimes\/[a-z]{3}\/annual_billing_data_files\/\d*/)
   }
 
   // Elements

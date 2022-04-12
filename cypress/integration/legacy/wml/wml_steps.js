@@ -204,9 +204,3 @@ Then('I see confirmation the transaction file is queued for export', () => {
 Then('there are no transactions to be billed displayed anymore', () => {
   cy.get('.table-responsive > tbody > tr').should('not.exist')
 })
-
-And('I set region to {word}', (option) => {
-  cy.get('select#region').select(option)
-
-  cy.wait('@getTransactionFileHistory').its('response.statusCode').should('eq', 200)
-})

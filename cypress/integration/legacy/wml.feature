@@ -32,10 +32,3 @@ Feature: WML (Installations) Legacy
     And generate the transaction file
     Then I see confirmation the transaction file is queued for export
     And there are no transactions to be billed displayed anymore
-    And I select 'Transaction File History' from the Transactions menu
-    And the main heading is 'Transaction File History'
-    And I set region to A
-    And I select 'Excluded Transactions' from the Transactions menu
-    And the main heading is 'Excluded Transactions'
-    And I select 'Transaction History' from the Transactions menu
-    And the main heading is 'Transaction History'

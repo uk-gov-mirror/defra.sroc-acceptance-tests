@@ -1,6 +1,6 @@
 import { When } from 'cypress-cucumber-preprocessor/steps'
 
-import ChangePasswordPage from '../../../pages/change_password_page'
+import ForgotPasswordConfirmPage from '../../../pages/forgot_password_confirm_page'
 import LastEmailPage from '../../../pages/last_email_page'
 
 When('I follow the link to reset my password', () => {
@@ -11,11 +11,11 @@ When('I follow the link to reset my password', () => {
       const link = LastEmailPage.extractResetPasswordLink(lastEmail.last_email.body)
 
       cy.visit(link).then(() => {
-        ChangePasswordPage.confirm()
+        ForgotPasswordConfirmPage.confirm()
 
-        ChangePasswordPage.passwordInput().type(Cypress.env('PASSWORD'), { log: false })
-        ChangePasswordPage.passwordConfirmationInput().type(Cypress.env('PASSWORD'), { log: false })
-        ChangePasswordPage.submitButton().click()
+        ForgotPasswordConfirmPage.passwordInput().type(Cypress.env('PASSWORD'), { log: false })
+        ForgotPasswordConfirmPage.passwordConfirmationInput().type(Cypress.env('PASSWORD'), { log: false })
+        ForgotPasswordConfirmPage.submitButton().click()
       })
     })
   })
