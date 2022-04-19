@@ -7,6 +7,10 @@ Then('I see {string} in the main heading', (title) => {
 })
 
 Given('I am starting with known {word} data', (regimeSlug) => {
+  cy.task('regime', regimeSlug).then((regime) => {
+    cy.wrap(regime).as('regime')
+  })
+
   cy.cleanDb()
 
   const fixtureFilename = fixturePickerHelper(regimeSlug)

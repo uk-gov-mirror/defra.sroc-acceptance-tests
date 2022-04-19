@@ -1,6 +1,6 @@
 import BaseTable from './base_table'
 
-class TransactionsToBeBilledTable extends BaseTable {
+class RetrospectiveTransactionsToBeBilledTable extends BaseTable {
   static categorySelect (rowNumber) {
     return cy.get(`.table-responsive > tbody > tr:nth-child(${rowNumber + 1}) input.tcm-select-input`)
   }
@@ -41,31 +41,23 @@ class TransactionsToBeBilledTable extends BaseTable {
 
     const regimeColumns = {
       pas: {
-        Amount: { name: '', index: 12 },
-        Band: { name: 'compliance_band', index: 9 },
-        Category: { name: 'sroc_category', index: 7 },
+        Amount: { name: 'line_amount', index: 9 },
+        Band: { name: 'compliance_band', index: 7 },
         'Original Permit': { name: 'original_permit_reference', index: 6 },
-        Period: { name: 'period', index: 11 },
-        Permit: { name: 'permit_reference', index: 5 },
-        TC: { name: '', index: 10 }
+        Period: { name: 'period', index: 8 },
+        Permit: { name: 'permit_reference', index: 5 }
       },
       cfd: {
-        Amount: { name: '', index: 13 },
-        Category: { name: 'sroc_category', index: 8 },
+        Amount: { name: 'line_amount', index: 10 },
         Consent: { name: 'consent_reference', index: 5 },
-        Dis: { name: '', index: 7 },
-        Period: { name: 'period', index: 12 },
-        TC: { name: '', index: 11 },
+        Dis: { name: 'discharge', index: 7 },
+        Period: { name: 'period', index: 9 },
         Ver: { name: 'version', index: 6 },
-        '%': { name: 'variation', index: 10 }
+        '%': { name: 'variation', index: 8 }
       },
       wml: {
-        Amount: { name: '', index: 11 },
-        Band: { name: 'compliance_band', index: 8 },
-        Category: { name: 'sroc_category', index: 6 },
-        Period: { name: 'period', index: 10 },
-        Permit: { name: 'permit_reference', index: 5 },
-        TC: { name: '', index: 9 }
+        // Waste does not support retrospective transactions so this page does
+        // not exist for the regime
       }
     }
 
@@ -97,4 +89,4 @@ class TransactionsToBeBilledTable extends BaseTable {
   }
 }
 
-export default TransactionsToBeBilledTable
+export default RetrospectiveTransactionsToBeBilledTable

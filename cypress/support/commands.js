@@ -181,6 +181,30 @@ Cypress.Commands.add('cleanDb', () => {
 })
 
 /**
+ * Use when you need to extract the name of the transaction file the TCM has just queued for export
+ *
+ * When we generatea transaction file via the UI the only way we can identify what the file is by grabbing its name from
+ * a flash message. We need the name if we want to then perform assertions against it in latter steps.
+ *
+ * By using a `wrap()` and Cypress's chaining we mimic a standard function returning just the filename as a string
+ * value. This will work for both retrospective and normal transaction file generations.
+ *
+ * Thanks to https://stackoverflow.com/a/57155616/6117745 for the `wrap()` solution
+ */
+Cypress.Commands.add('extractExportFilename', () => {
+  cy.log('Extracting export filename from flash message')
+  cy.get('.col > .alert', { log: false })
+    .should('contain.text', 'Successfully queued')
+    .then((alert) => {
+      // Use regex match to extract the text between "transaction file " or "retrospective file " and " for export"
+      // ?<= and ?= stop the matcher from returning those strings, so we just get the filename. This results in an array
+      // with a single item, so we return that using [0]
+      const filename = alert.text().match(/(?<=retrospective file |transaction file )(.*)(?= for export)/g)[0]
+      cy.wrap(filename, { log: false })
+    })
+})
+
+/**
  * Use when you need to tell the TCM to run one of its jobs
  *
  * Typically the TCM runs background jobs according to a schedule, for example, importing transaction files. To support

@@ -1,27 +1,19 @@
 Feature: CFD (Water Quality) Legacy
 
   Background:
-    Given I sign in as the admin user
+    Given I am starting with known cfd data
+    And I sign in as the 'admin' user
 
   Scenario: Legacy test
     Then the user menu is visible
     And the main heading is 'Transactions to be billed'
     And the user menu says I am signed in as 'Admin User'
-    And I select 'Water Quality' from the Regime menu
+    And I select the 'Water Quality' regime
     And I select 'Imported Transaction Files' from the Transactions menu
     And the main heading is 'Imported Transaction Files'
     And the first record has file reference 'CFDAI00394'
     And I select 'Transactions to be billed' from the Transactions menu
     And the main heading is 'Transactions to be billed'
-    And I log the number of transactions displayed
-    # If the TCM had no transactions the legacy test would then skip approx 600 lines of testing!
-    # We've assumed we'll always be running this against an environment that at least has our basic test data. We will
-    # always attempt to run the following steps.
-    And I log which region is selected in the search bar
-    And I select All for financial year in the search bar
-    And I select 50 for items per page in the paging info bar
-    And I see the 'Ver' column is displayed
-    And I see the 'Dis' column is displayed
     Then I copy the consent reference from the first transaction
     And search transactions with it
     And all transactions displayed have the same consent reference
@@ -33,13 +25,11 @@ Feature: CFD (Water Quality) Legacy
     Then I see confirmation the transaction file is queued for export
     And I log the transaction filename to prove it can be used in another step
     And there are no transactions to be billed displayed anymore
+    # We need this step because of sticky search values
+    # See https://eaflood.atlassian.net/browse/CMEA-306
+    Then I clear the search field and search again because of CMEA-306
     And I select 'Pre-April 2018 Transactions to be billed' from the Transactions menu
     And the main heading is 'Pre-April 2018 Transactions to be billed'
-    # At this point in the legacy tests we set the region, clear the search field and then hit search. But with an
-    # automates test this does nothing. Region A is already selected and the search field is already empty. So, clicking
-    # search is the equivalent of just doing a page refresh. So, we've omitted the clear and search but left the region
-    # selection for kicks!
-    And I set retrospectives region to A
     And I grab the first record and confirm its period is pre-April 2018
     Then I generate the pre-sroc transaction file
     Then I see confirmation the transaction file is queued for export
