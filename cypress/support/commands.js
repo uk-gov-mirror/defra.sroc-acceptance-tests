@@ -218,13 +218,17 @@ Cypress.Commands.add('extractExportFilename', () => {
  *  - `import`
  *  - `export`
  */
-Cypress.Commands.add('runJob', (jobName) => {
-  cy.authenticate('admin@sroc.gov.uk')
+Cypress.Commands.add('runJob', (jobName, authenticate = true) => {
+  if (authenticate) {
+    cy.authenticate('admin@sroc.gov.uk')
+  }
   cy.log(`Running ${jobName} job`)
   cy.request({
     log: false,
     method: 'GET',
     url: `/jobs/${jobName}`
   }).its('status', { log: false }).should('equal', 200)
-  cy.killSession()
+  if (authenticate) {
+    cy.killSession()
+  }
 })

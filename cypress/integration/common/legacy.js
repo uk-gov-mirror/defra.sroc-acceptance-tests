@@ -1,7 +1,9 @@
 // We disable this rule to prevent chai matchers like `to.be.empty` causing linting errors:
 /* eslint-disable no-unused-expressions */
 
-import { Then, And, Before } from 'cypress-cucumber-preprocessor/steps'
+import { Then, And, Before, When } from 'cypress-cucumber-preprocessor/steps'
+
+import { parseFileDataHelper } from '../../support/helpers'
 
 import MainMenu from '../../pages/menus/main_menu'
 
@@ -61,9 +63,11 @@ Then('the first record has file reference {string}', (fileReference) => {
   })
 })
 
-Then('I copy the consent reference from the first transaction', () => {
-  cy.get('.table-responsive > tbody > tr:first-child > td').eq(4).invoke('text').then((reference) => {
-    cy.wrap(reference.trim()).as('searchValue')
+Then('I copy the {word} reference from the first transaction', (searchColumn) => {
+  cy.get('@regime').then((regime) => {
+    TransactionsPage.table.cell(0, searchColumn, regime.slug).invoke('text').then((reference) => {
+      cy.wrap(reference.trim()).as('searchValue')
+    })
   })
 })
 
@@ -139,7 +143,7 @@ And('the transaction categories will be set', () => {
 
 And('the transaction charges will be set', () => {
   cy.get('@regime').then((regime) => {
-    TransactionsPage.table.cells('Amount', regime.slug).first().should('not.contain.text', '(TBC)')
+    TransactionsPage.table.cell(0, 'Amount', regime.slug).should('not.contain.text', '(TBC)')
   })
 })
 
@@ -199,9 +203,35 @@ And('I log the transaction filename to prove it can be used in another step', ()
     .then(filename => cy.log(filename))
 })
 
+When('the transaction file is exported', () => {
+  cy.runJob('export', false)
+})
+
+Then('I can see it contains the transactions we billed', (expectedValues) => {
+  cy.get('@regime').then((regime) => {
+    cy.get('@exportFilename').then((filename) => {
+      cy.task('s3Download', {
+        Bucket: Cypress.env('S3_BUCKET'),
+        remotePath: Cypress.env('S3_DOWNLOAD_PATH'),
+        filePath: `${regime.slug}/${filename}`
+      }).then((data) => {
+        const exportData = parseFileDataHelper(data)
+        const columnData = exportData.map((row) => row[2])
+
+        cy.wrap(expectedValues.rawTable).each(row => {
+          expect(columnData).to.include(row[0])
+        })
+      })
+    })
+  })
+})
+
 And('I grab the first record and confirm its period is pre-April 2018', () => {
   cy.get('@regime').then((regime) => {
-    RetrospectiveTransactionsPage.table.cells('Period', regime.slug).first().invoke('text').then((text) => {
+    RetrospectiveTransactionsPage.table.cell(0, 'Customer', regime.slug).invoke('text').then((reference) => {
+      cy.wrap(reference.trim()).as('customerReference')
+    })
+    RetrospectiveTransactionsPage.table.cell(0, 'Period', regime.slug).invoke('text').then((text) => {
       const endPeriod = text.trim().slice(11)
       const parts = endPeriod.split('/')
       const year = parseInt(parts[2])

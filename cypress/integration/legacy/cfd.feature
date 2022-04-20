@@ -14,7 +14,7 @@ Feature: CFD (Water Quality) Legacy
     And the first record has file reference 'CFDAI00394'
     And I select 'Transactions to be billed' from the Transactions menu
     And the main heading is 'Transactions to be billed'
-    Then I copy the consent reference from the first transaction
+    Then I copy the Consent reference from the first transaction
     And search transactions with it
     And all transactions displayed have the same consent reference
     Then I select a category for each transaction
@@ -23,8 +23,10 @@ Feature: CFD (Water Quality) Legacy
     And approve the transactions for billing
     And generate the transaction file
     Then I see confirmation the transaction file is queued for export
-    And I log the transaction filename to prove it can be used in another step
     And there are no transactions to be billed displayed anymore
+    When the transaction file is exported
+    Then I can see it contains the transactions we billed
+      | A61000001C |
     # We need this step because of sticky search values
     # See https://eaflood.atlassian.net/browse/CMEA-306
     Then I clear the search field and search again because of CMEA-306
@@ -33,3 +35,8 @@ Feature: CFD (Water Quality) Legacy
     And I grab the first record and confirm its period is pre-April 2018
     Then I generate the pre-sroc transaction file
     Then I see confirmation the transaction file is queued for export
+    When the transaction file is exported
+    Then I can see it contains the transactions we billed
+      | A61000007C |
+      | A61000010C |
+      | A61000002C |

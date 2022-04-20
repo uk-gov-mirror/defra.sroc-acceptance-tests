@@ -63,4 +63,25 @@ export function generateStringHelper (length = 8) {
   return faker.random.alpha({ count: length })
 }
 
-export default { fixturePickerHelper, generateUserHelper, generateStringHelper }
+/**
+ * Helper that takes data from either an import or export transaction file and parses it into a two-dimensional array
+ *
+ * As part of the parsing it also removes any double quotes that normally enclose each item.
+ *
+ * @param {string} data A string representing all the data read from a file to be parsed
+ *
+ * @returns {string[][]} a two-dimensional array representing the rows and columns in parsed file data
+ */
+export function parseFileDataHelper (data) {
+  return data
+    // Split the data into an array of lines
+    .split('\n')
+    // Split each line into an array of items, and use regex replace to remove enclosing quotes from each item.
+    // https://thispointer.com/remove-first-and-last-double-quotes-from-a-string-in-javascript/
+    .map(line => line
+      .split(',')
+      .map(item => item.replace(/(^"|"$)/g, ''))
+    )
+}
+
+export default { fixturePickerHelper, generateUserHelper, generateStringHelper, parseFileDataHelper }
