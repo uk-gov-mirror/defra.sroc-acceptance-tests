@@ -15,7 +15,7 @@ And('I can download transaction data', () => {
 })
 
 Then('I am told that the transaction file has not yet been generated', () => {
-  cy.alertShouldContain('The transaction data file has not yet been generated. This file will be automatically generated overnight. Please check again tomorrow.')
+  ExportDataPage.notGeneratedAlert().should('contain.text', 'The transaction data file has not yet been generated.')
 })
 
 And('I run the generate data job', () => {

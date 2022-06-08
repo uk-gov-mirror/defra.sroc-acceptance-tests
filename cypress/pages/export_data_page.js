@@ -15,6 +15,10 @@ class ExportDataPage extends BaseAppPage {
   static downloadButton () {
     return cy.get('.btn.btn-primary')
   }
+
+  static notGeneratedAlert () {
+    return cy.get('.row > .alert')
+  }
 }
 
 export default ExportDataPage
