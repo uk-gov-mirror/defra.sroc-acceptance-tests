@@ -2,8 +2,8 @@ import { Then, And } from 'cypress-cucumber-preprocessor/steps'
 import ExportDataPage from '../../../pages/export_data_page'
 import TransactionsPage from '../../../pages/transactions_page'
 
-And('I proceed to view file download details', () => {
-  TransactionsPage.transactionsMenu.getOption('Download Transaction Data').click()
+And('I proceed to view the file download details', () => {
+  TransactionsPage.transactionsMenu.getOption('Download Transaction Data', 'pas').click()
 })
 
 Then('I can view the Data Protection Notice', () => {
@@ -12,4 +12,12 @@ Then('I can view the Data Protection Notice', () => {
 
 And('I can download transaction data', () => {
   ExportDataPage.downloadButton().should('have.attr', 'href', '/regimes/pas/data_export/download')
+})
+
+Then('I am told that the transaction file has not yet been generated', () => {
+  cy.alertShouldContain('The transaction data file has not yet been generated. This file will be automatically generated overnight. Please check again tomorrow.')
+})
+
+And('I run the generate data job', () => {
+  cy.runJob('data')
 })
