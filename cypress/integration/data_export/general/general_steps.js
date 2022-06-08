@@ -14,8 +14,12 @@ And('I can download transaction data', () => {
   ExportDataPage.downloadButton().should('have.attr', 'href', '/regimes/pas/data_export/download')
 })
 
-Then('I am told that the transaction file has not yet been generated', () => {
+Then('I am told that the transaction data file has not yet been generated', () => {
   ExportDataPage.notGeneratedAlert().should('contain.text', 'The transaction data file has not yet been generated.')
+})
+
+And('I cannot download transaction data', () => {
+  ExportDataPage.downloadButton().should('not.exist')
 })
 
 And('I run the generate data job', () => {

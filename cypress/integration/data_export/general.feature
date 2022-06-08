@@ -8,7 +8,7 @@ Feature: Data Export
     When I select the 'Installations' regime
     And I proceed to view the file download details
     Then I can view the Data Protection Notice
-    And I am told that the transaction file has not yet been generated
+    And I am told that the transaction data file has not yet been generated
     And I cannot download transaction data
 
   Scenario: Download transaction data
