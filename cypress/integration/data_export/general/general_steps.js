@@ -34,16 +34,7 @@ Then('I can download transaction data file', () => {
 
 And('the transaction data file exists', () => {
   cy.get('@regime').then((regime) => {
-    cy.task('s3Download', {
-      Bucket: Cypress.env('S3_ARCHIVE_BUCKET'),
-      remotePath: Cypress.env('S3_DATA_PATH'),
-      filePath: `${regime.slug}_transactions.csv.gz`
-    }).then((data) => {
-      const downloadedFilePath = `${os.tmpdir()}/${regime.slug}_transactions.csv.gz`
-
-      cy.writeFile(downloadedFilePath, data)
-      cy.wrap(downloadedFilePath).as('downloadedFilePath')
-      cy.log(`Saved file to ${downloadedFilePath}`)
-    })
+    const filename = `${regime.slug}_transactions.csv.gz`
+    cy.downloadFile(`${Cypress.config().baseUrl}/regimes/${regime.slug}/data_export/download`, os.tmpdir(), filename)
   })
 })
