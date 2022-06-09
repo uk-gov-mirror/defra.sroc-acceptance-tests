@@ -1,4 +1,5 @@
 import { Then, And } from 'cypress-cucumber-preprocessor/steps'
+import * as os from 'os'
 
 import ExportDataPage from '../../../pages/export_data_page'
 import TransactionsPage from '../../../pages/transactions_page'
@@ -38,11 +39,11 @@ And('the transaction data file exists', () => {
       remotePath: Cypress.env('S3_DATA_PATH'),
       filePath: `${regime.slug}_transactions.csv.gz`
     }).then((data) => {
-      if (data) {
-        cy.log('We have a file')
-      } else {
-        cy.log('We do not have a file')
-      }
+      const downloadedFilePath = `${os.tmpdir()}/${regime.slug}_transactions.csv.gz`
+
+      cy.writeFile(downloadedFilePath, data)
+      cy.wrap(downloadedFilePath).as('downloadedFilePath')
+      cy.log(`Saved file to ${downloadedFilePath}`)
     })
   })
 })
