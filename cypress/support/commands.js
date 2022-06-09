@@ -26,6 +26,10 @@ import SignInPage from '../pages/sign_in_page'
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+// Adds support to download files. We use it to allow us to download things like the transaction data file export which
+// replicates following links in the UI rather than downloading them directly from AWS S3
+require('cypress-downloadfile/lib/downloadFileCommand')
+
 /**
  * Use when you just need to authenticate the user and avoid the UI
  *
