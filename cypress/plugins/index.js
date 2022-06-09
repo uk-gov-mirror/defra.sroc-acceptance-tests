@@ -27,6 +27,12 @@ const dotenvPlugin = require('cypress-dotenv')
 // local config file
 const path = require('path')
 
+// Add support for uncompressing gzip files (the TCM compress the data export files as .gz)
+const zlib = require('zlib')
+
+// Add support for reading and writing from the file system
+const fs = require('fs')
+
 /**
  * Load the cypress-dotenv plugin and read env vars for a specific environment
  *
@@ -147,6 +153,29 @@ module.exports = (on, config) => {
       }
 
       return result
+    },
+
+    /**
+     * Use to unzip a file
+     *
+     * Added to support testing of the transaction data file export. The TCM compresses the export for each regime into
+     * a gzip file. In order to access the data we need to unzip it.
+     *
+     * https://www.knowledgehut.com/blog/web-development/compression-decompression-of-data-using-zlib-in-Nodejs
+    */
+    unzip ({ readFilename, writeFilename }) {
+      // You don't need to worry if `writeFilename` already exists in `cypress/downloads`. This process overwrites it
+      // automatically.
+      const readFilePath = path.join('cypress', 'downloads', readFilename)
+      const input = fs.createReadStream(readFilePath)
+
+      const writeFilePath = path.join('cypress', 'downloads', writeFilename)
+      const output = fs.createWriteStream(writeFilePath)
+
+      const unzip = zlib.createUnzip()
+      input.pipe(unzip).pipe(output)
+
+      return writeFilePath
     }
   })
 
