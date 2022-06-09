@@ -11,7 +11,6 @@ Feature: Data Export
     And I am told that the transaction data file has not yet been generated
     And I cannot download transaction data
 
-  @wip
   Scenario: Download transaction data
     When I run the generate data job
     And return to the home page

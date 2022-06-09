@@ -19,6 +19,30 @@ And('I cannot download transaction data', () => {
   ExportDataPage.downloadButton().should('not.exist')
 })
 
+And('return to the home page', () => {
+  TransactionsPage.visit()
+})
+
 And('I run the generate data job', () => {
-  cy.runJob('data')
+  cy.runJob('data', false)
+})
+
+Then('I can download transaction data file', () => {
+  ExportDataPage.downloadButton().should('have.attr', 'href', '/regimes/pas/data_export/download')
+})
+
+And('the transaction data file exists', () => {
+  cy.get('@regime').then((regime) => {
+    cy.task('s3Download', {
+      Bucket: Cypress.env('S3_ARCHIVE_BUCKET'),
+      remotePath: Cypress.env('S3_DATA_PATH'),
+      filePath: `${regime.slug}_transactions.csv.gz`
+    }).then((data) => {
+      if (data) {
+        cy.log('We have a file')
+      } else {
+        cy.log('We do not have a file')
+      }
+    })
+  })
 })
