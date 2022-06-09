@@ -1,5 +1,6 @@
 import { Then, And } from 'cypress-cucumber-preprocessor/steps'
-import * as os from 'os'
+
+import * as path from 'path'
 
 import ExportDataPage from '../../../pages/export_data_page'
 import TransactionsPage from '../../../pages/transactions_page'
@@ -34,7 +35,15 @@ Then('I can download transaction data file', () => {
 
 And('the transaction data file exists', () => {
   cy.get('@regime').then((regime) => {
+    // You don't need to worry if a file already exists in `cypress/downloads`. The `cy.downloadFile()` overwrites it
+    // automatically.
     const filename = `${regime.slug}_transactions.csv.gz`
-    cy.downloadFile(`${Cypress.config().baseUrl}/regimes/${regime.slug}/data_export/download`, os.tmpdir(), filename)
+    cy.downloadFile(`${Cypress.config().baseUrl}/regimes/${regime.slug}/data_export/download`, path.join('cypress', 'downloads'), filename)
+
+    const readFilename = filename
+    const writeFilename = `${regime.slug}_transactions.csv`
+    cy.task('unzip', { readFilename, writeFilename }).then((unzippedFile) => {
+      cy.wrap(unzippedFile).as('unzippedFile')
+    })
   })
 })
