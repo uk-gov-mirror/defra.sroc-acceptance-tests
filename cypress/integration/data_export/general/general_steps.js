@@ -5,6 +5,8 @@ import * as path from 'path'
 import ExportDataPage from '../../../pages/export_data_page'
 import TransactionsPage from '../../../pages/transactions_page'
 
+import { parseFileDataHelper } from '../../../support/helpers'
+
 And('I proceed to view the file download details', () => {
   TransactionsPage.transactionsMenu.getOption('Download Transaction Data', 'pas').click()
 })
@@ -44,6 +46,36 @@ And('the transaction data file exists', () => {
     const writeFilename = `${regime.slug}_transactions.csv`
     cy.task('unzip', { readFilename, writeFilename }).then((unzippedFile) => {
       cy.wrap(unzippedFile).as('unzippedFile')
+    })
+  })
+})
+
+And('it contains the data I expect', () => {
+  cy.get('@regime').then((regime) => {
+    cy.get('@unzippedFile').then((unzippedFile) => {
+      cy.readFile(unzippedFile).then((data) => {
+        const exportData = parseFileDataHelper(data)
+
+        expect(exportData.length).to.equal(14)
+
+        // The rest of the test is about confirming that all the lines in the file are for the selected regime. We do
+        // this by taking the first 3 chars of each line's transaction reference and then working out all the unqiue
+        // values. If everything is as expected we should get an array of one, for example ['pas']
+
+        exportData.shift() // get rid of the headers
+        exportData.pop() // get rid of the newline at the end of the file
+
+        // We use map() to take the reference from each row and extract the first 3 chars. The result is an array, for
+        // example ['pas', 'pas', 'pas']
+        const referenceRegimePrefixes = exportData.map((row) => row[3].slice(0, 3).toLowerCase())
+        // Set() is an ES6 native object to store unique values. We create one using our reference prefixes as the
+        // source and then use the spread operator to convert it back into an array. The result should be, for example
+        // ['pas']
+        const uniqueReferenceRegimePrefixes = [...new Set(referenceRegimePrefixes)]
+
+        expect(uniqueReferenceRegimePrefixes.length).to.equal(1)
+        expect(uniqueReferenceRegimePrefixes[0]).to.equal(regime.slug)
+      })
     })
   })
 })

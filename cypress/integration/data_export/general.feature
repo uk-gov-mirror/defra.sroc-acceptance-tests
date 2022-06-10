@@ -18,3 +18,4 @@ Feature: Data Export
     And I proceed to view the file download details
     Then I can download transaction data file
     And the transaction data file exists
+    And it contains the data I expect
