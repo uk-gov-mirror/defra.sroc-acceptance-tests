@@ -10,7 +10,7 @@ jobs:
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # Check for 'temporary' tags i.e. tags often used when working on a feature/scenario but which we don't want
       # appearing in the final commit to main
